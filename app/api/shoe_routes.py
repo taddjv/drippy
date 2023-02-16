@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 from app.models import Shoe, db
-from app.forms import AnswerForm
+from app.forms import shoe_form
 from sqlalchemy import inspect
-from flask_login import current_user,login_required
+
 
 shoe_routes = Blueprint("shoes", __name__)
 
@@ -24,5 +24,8 @@ def object_as_dict(obj):
 
 @shoe_routes.route("/<int:id>", methods=["GET"])
 def get_shoe(id):
-    shoe = Shoe.query.get(id)
-    return object_as_dict(shoe)
+    # shoes = Shoe.query.all()
+    # # shoe = session.query(Shoe).all()
+
+    # # return {'shoes': [object_as_dict(shoe) for shoe in shoes]}
+    return "hello"
