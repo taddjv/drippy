@@ -14,11 +14,11 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    shoes = db.relationship("Shoe", back_populates="user")
-    brands = db.relationship("Brand", back_populates="user")
+    shoes = db.relationship("Shoe", back_populates="user",cascade="all, delete-orphan")
+    brands = db.relationship("Brand", back_populates="user",cascade="all, delete-orphan")
     cart = db.relationship("Cart", back_populates="user")
-    cart_items = db.relationship("CartItem", back_populates="user")
-    reviews = db.relationship("Review", back_populates="user")
+    cart_items = db.relationship("CartItem", back_populates="user",cascade="all, delete-orphan")
+    reviews = db.relationship("Review", back_populates="user",cascade="all, delete-orphan")
 
 
 

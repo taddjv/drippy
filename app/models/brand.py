@@ -15,4 +15,4 @@ class Brand(db.Model):
     dateCreated = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     user = db.relationship("User", back_populates="brands")
-    shoes = db.relationship("Shoe", back_populates="brand")
+    shoes = db.relationship("Shoe", back_populates="brand",cascade="all, delete-orphan")

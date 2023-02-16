@@ -6,5 +6,6 @@ from app.models import Shoe
 
 class ShoeForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
-    description = StringField('description', validators=[DataRequired()])
+    url = StringField('url', validators=[DataRequired()])
+    price = IntegerField("price",validators=[DataRequired()] )
     brand_id = IntegerField("brand_id",validators=[DataRequired()] )

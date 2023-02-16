@@ -24,18 +24,16 @@ class Shoe(db.Model):
 
     brand = db.relationship("Brand", back_populates="shoes")
     user = db.relationship("User", back_populates="shoes")
-    reviews = db.relationship("Review", back_populates="shoe")
+    reviews = db.relationship("Review", back_populates="shoe",cascade="all, delete-orphan")
     cart_item = db.relationship("CartItem", back_populates="shoe")
 
 
-# db_url = os.environ.get('DATABASE_URL')
-# engine = create_engine(db_url)
-
-# SessionFactory = sessionmaker(bind=engine)
-
-# session = SessionFactory()
-
-# # Article code here.
-
-# session.close()
-# engine.dispose()
+    def average_reviews(self):
+        final = {"star_count":0,
+        }
+        total_stars = 0
+        for review in self.reviews:
+            final["star_count"] = final["star_count"] + 1
+            total_stars = total_stars + review.stars
+        final["total_stars"] = total_stars / final["star_count"]
+        return final
