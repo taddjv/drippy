@@ -35,5 +35,11 @@ class Shoe(db.Model):
         for review in self.reviews:
             final["star_count"] = final["star_count"] + 1
             total_stars = total_stars + review.stars
-        final["total_stars"] = total_stars / final["star_count"]
-        return final
+        if total_stars > 0:
+            final["total_stars"] = total_stars / final["star_count"]
+            return final
+        else:
+            return {
+                "star_count": 0,
+                "total_stars": 0
+            }

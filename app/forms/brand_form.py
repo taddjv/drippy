@@ -7,3 +7,4 @@ from app.models import Brand
 class BrandForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     description = StringField('description', validators=[DataRequired()])
+    url = StringField('url', validators=[DataRequired()])

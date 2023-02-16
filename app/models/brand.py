@@ -16,3 +16,11 @@ class Brand(db.Model):
 
     user = db.relationship("User", back_populates="brands")
     shoes = db.relationship("Shoe", back_populates="brand",cascade="all, delete-orphan")
+
+    def shoe_count(self):
+        # sum = len(self.shoes)
+        # for review in self.reviews:
+        #     final["star_count"] = final["star_count"] + 1
+        #     total_stars = total_stars + review.stars
+        # final["total_stars"] = total_stars / final["star_count"]
+        return len(self.shoes)

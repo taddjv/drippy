@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Shoe, db ,Review
+from app.models import Shoe, db
 from app.forms import ShoeForm
 from sqlalchemy import inspect
 from sqlalchemy.orm import joinedload
