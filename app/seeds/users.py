@@ -1,4 +1,9 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, User,Cart, environment, SCHEMA
+from sqlalchemy import inspect
+
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
 
 
 # Adds a demo user, you can add other users here if you want
@@ -31,6 +36,15 @@ def seed_users():
     db.session.add(new_balance)
     db.session.add(converse)
     db.session.add(vans)
+    db.session.commit()
+
+    demo_cart = Cart(user_id=object_as_dict(demo)["id"])
+    marnie_cart = Cart(user_id=object_as_dict(marnie)["id"])
+    bobbie_cart = Cart(user_id=object_as_dict(bobbie)["id"])
+
+    db.session.add(demo_cart)
+    db.session.add(marnie_cart)
+    db.session.add(bobbie_cart)
     db.session.commit()
 
 
