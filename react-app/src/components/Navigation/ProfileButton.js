@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
@@ -28,7 +29,6 @@ function ProfileButton({ user }) {
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
-
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -39,10 +39,46 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
+      {user ? (
+        <>
+          <NavLink className="n-r-link" exact to="/my-cart">
+            <i className="fa fa-shopping-cart" size="m" />
+          </NavLink>
+          <button className="n-r-button" onClick={openMenu}>
+            Hi {user.username}
+          </button>
+        </>
+      ) : (
+        <button className="n-r-button" onClick={openMenu}>
+          Account
+        </button>
+      )}
+
+      <div className={ulClassName} ref={ulRef}>
+        {user ? (
+          <>
+            <button className="n-r-b-button" onClick={handleLogout}>
+              Log Out
+            </button>
+            <button className="n-r-b-button">Dark mode</button>
+          </>
+        ) : (
+          <>
+            <OpenModalButton
+              buttonText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+
+            <OpenModalButton
+              buttonText="Sign Up"
+              onItemClick={closeMenu}
+              modalComponent={<SignupFormModal />}
+            />
+          </>
+        )}
+      </div>
+      {/* <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li>{user.username}</li>
@@ -66,7 +102,7 @@ function ProfileButton({ user }) {
             />
           </>
         )}
-      </ul>
+      </ul> */}
     </>
   );
 }
