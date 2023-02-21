@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
+import Shop from "./components/Shop";
+import { ShopShoe } from "./components/Shop/ShopShoe";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,6 +18,12 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       <Switch>
+        <Route path="/shop">
+          <Shop />
+        </Route>
+        <Route path="/test">
+          <ShopShoe />
+        </Route>
         <Route path="/">
           <Home />
         </Route>

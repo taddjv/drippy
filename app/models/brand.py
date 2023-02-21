@@ -11,6 +11,7 @@ class Brand(db.Model):
     name = db.Column(db.String(1000), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     url = db.Column(db.String(1000), nullable=False)
+    poster_url = db.Column(db.String(1000))
     user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     dateCreated = db.Column(db.DateTime(timezone=True), server_default=func.now())
 

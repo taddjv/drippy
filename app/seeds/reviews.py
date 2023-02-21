@@ -1,4 +1,4 @@
-from app.models import db, Review, environment, SCHEMA
+from app.models import db, Review,Shoe, environment, SCHEMA
 import random
 
 
@@ -8,10 +8,12 @@ def seed_reviews():
 
     for x in range(21):
         number_of_reviews = random.randint(1, 4)
+        shoe = Shoe.query.get(x + 1)
         for review_number in range(number_of_reviews):
             random_user = random.randint(1,3)
             random_stars = random.randint(1,5)
             review = Review(description=reviews[review_number - 1], stars=random_stars, shoe_id=(x + 1),user_id=random_user)
+            shoe.review_count = shoe.review_count + 1
             db.session.add(review)
 
     db.session.commit()

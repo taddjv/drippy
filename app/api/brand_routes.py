@@ -58,21 +58,16 @@ def delete_brand(id):
 @brand_routes.route("/", methods=["GET"])
 def get_all_brands():
     brands = db.session.query(Brand).all()
-    for brand in brands:
-        print(brand.shoes)
     final = {"brands":[object_as_dict(brand) for brand in brands]}
     return final
 
 @brand_routes.route("/top", methods=["GET"])
-def get_all_brands_top():
-    brands = db.session.query(Brand).all()
-    def shoe_count(brnd):
-        final_brand = object_as_dict(brnd)
-        final_brand["shoe_count"] = len(brnd.shoes)
-        return final_brand
-
-    final = {"brands":[shoe_count(brand) for brand in brands]}
-    return final
+def get_top_brands():
+    brand1 = Brand.query.get(1)
+    brand2 = Brand.query.get(2)
+    brand3 = Brand.query.get(3)
+    brand4 = Brand.query.get(4)
+    return {"brand1":object_as_dict(brand1),"brand2":object_as_dict(brand2),"brand3":object_as_dict(brand3),"brand4":object_as_dict(brand4)}
 
 @brand_routes.route("/", methods=["POST"])
 @login_required

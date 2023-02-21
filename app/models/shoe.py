@@ -18,6 +18,8 @@ class Shoe(db.Model):
     name = db.Column(db.String(1000), nullable=False)
     url = db.Column(db.String(1000), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    count = db.Column(db.Integer, nullable=False)
+    review_count = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     brand_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("brands.id")), nullable=False)
     dateCreated = db.Column(db.DateTime(timezone=True), server_default=func.now())

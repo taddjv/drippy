@@ -61,15 +61,22 @@ def delete_shoe(id):
     else:
         return {"message": "you are not the owner of the shoe"}
 
-@shoe_routes.route("/", methods=["GET"])
-def get_all_shoes():
-    shoes = db.session.query(Shoe).all()
-    final = {"shoes":[]}
-    for shoe in shoes:
-        final_shoe = object_as_dict(shoe)
-        final_shoe["reviews"] = shoe.average_reviews()
-        final["shoes"].append(final_shoe)
-    return final
+@shoe_routes.route("/top", methods=["GET"])
+def get_fav_shoes():
+    shoe1 = Shoe.query.get(1)
+    shoe2 = Shoe.query.get(2)
+    shoe3 = Shoe.query.get(3)
+    return {"shoe1":object_as_dict(shoe1),"shoe2":object_as_dict(shoe2),"shoe3":object_as_dict(shoe3)}
+
+# @shoe_routes.route("/", methods=["GET"])
+# def get_all_shoes():
+#     shoes = db.session.query(Shoe).all()
+#     final = {"shoes":[]}
+#     for shoe in shoes:
+#         final_shoe = object_as_dict(shoe)
+#         final_shoe["reviews"] = shoe.average_reviews()
+#         final["shoes"].append(final_shoe)
+#     return final
 
 @shoe_routes.route("/", methods=["POST"])
 @login_required
@@ -84,3 +91,46 @@ def post_shoe():
         db.session.commit()
         return object_as_dict(shoe)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+@shoe_routes.route("/<string:sort>", methods=["GET"])
+def get_all_shoes(sort):
+    shoes = None
+    if sort == "default":
+        shoes = db.session.query(Shoe).all()
+    if sort == "reviews":
+        shoes = db.session.query(Shoe).order_by(Shoe.review_count.desc())
+    if sort == "expensive":
+        shoes = db.session.query(Shoe).order_by(Shoe.price.desc())
+    if sort == "cheapest":
+        shoes = db.session.query(Shoe).order_by(Shoe.price)
+    final = {"shoes":[]}
+    for shoe in shoes:
+        final_shoe = object_as_dict(shoe)
+        final_shoe["reviews"] = shoe.average_reviews()
+        final["shoes"].append(final_shoe)
+    return final
+
+@shoe_routes.route("<string:sort>/search/<string:search>/", methods=["GET"])
+def search_all_shoes(sort,search):
+    shoes = None
+    searchQuery = None
+    if (search == "all"):
+        searchQuery = ""
+    else:
+        searchQuery = search
+
+    #! order by newwest should be the default
+    if sort == "default":
+        shoes = db.session.query(Shoe).filter(Shoe.name.contains((searchQuery)))
+    if sort == "reviews":
+        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.review_count.desc())
+    if sort == "expensive":
+        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.price.desc())
+    if sort == "cheapest":
+        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.price)
+    final = {"shoes":[]}
+    for shoe in shoes:
+        final_shoe = object_as_dict(shoe)
+        final_shoe["reviews"] = shoe.average_reviews()
+        final["shoes"].append(final_shoe)
+    return final

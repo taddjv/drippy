@@ -6,3 +6,13 @@
   margin: 0;
   font-family: "Montserrat", sans-serif;
 }
+*:focus {
+  outline: none;
+}
+
+#root {
+  height: 100vh;
+  /* background: #efeeef; */
+  background: #f0ece4;
+  overflow: scroll;
+}

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7d04530f6295
+Revision ID: 6c830193df6e
 Revises: ffdc0a98111c
-Create Date: 2023-02-16 19:17:56.289268
+Create Date: 2023-02-20 21:38:28.145090
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7d04530f6295'
+revision = '6c830193df6e'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(length=1000), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
     sa.Column('url', sa.String(length=1000), nullable=False),
+    sa.Column('poster_url', sa.String(length=1000), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('dateCreated', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -40,6 +41,8 @@ def upgrade():
     sa.Column('name', sa.String(length=1000), nullable=False),
     sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
+    sa.Column('count', sa.Integer(), nullable=False),
+    sa.Column('review_count', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('brand_id', sa.Integer(), nullable=False),
     sa.Column('dateCreated', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),

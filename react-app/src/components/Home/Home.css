@@ -1,15 +1,14 @@
 .home {
-  width: 100%;
-  /* height: 100vh; */
-  /* background: lightblue; */
-  background-color: #efeeef;
-  /* overflow-y: hidden; */
+  width: 1440px;
+
+  margin: auto;
+
+  overflow: hidden;
 }
 .section-1-container {
   display: flex;
   width: 1440px;
   transition: all 1s ease;
-  /* overflow: hidden; */
 }
 
 .home-section-1,
@@ -103,4 +102,79 @@
 .h-l-shoe1 {
   max-height: 70vh;
   max-width: 100%;
+}
+
+.section-2-container {
+  width: 1440px;
+  height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+.s-2-c-top {
+  font-size: 32px;
+  margin-left: 24px;
+  padding-top: 24px;
+}
+
+.s-2-c-bottom {
+  display: flex;
+  height: 440px;
+  justify-content: space-between;
+}
+
+.s-2-c-b {
+  height: 350px;
+  width: 300px;
+  background: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #5b525f solid 1px;
+}
+.s-2-c-b-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.s-2-c-b > h2 {
+  z-index: 100;
+  position: relative;
+  font-size: 52px;
+}
+.s-2-c-b-logo {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  z-index: 1;
+}
+
+.s-2-c-b-pair {
+  /* align-self: flex-end; */
+}
+
+.s-2-c-b-hover {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
+  position: absolute;
+  z-index: 500;
+  transition: 0.5s ease;
+  color: transparent;
+}
+.s-2-c-b-hover:hover {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+.s-2-c-b-hover > p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: larger;
 }
