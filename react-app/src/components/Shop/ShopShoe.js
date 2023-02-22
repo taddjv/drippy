@@ -10,7 +10,7 @@ export const ShopShoe = ({ count, url, name, price, reviews }) => {
       <h2 className="s-c-s-price">${price} USD</h2>
       <di className="s-c-s-bottom">
         <h2 className="s-c-s-reviews">
-          {renderStars(reviews.total_stars)} {"("}
+          {renderStars(reviews.total_stars, "s-c-s-logo")} {"("}
           {reviews.star_count}
           {")"}
         </h2>

@@ -16,3 +16,8 @@
   background: #f0ece4;
   overflow: scroll;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

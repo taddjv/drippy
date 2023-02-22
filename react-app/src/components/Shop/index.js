@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as shoeActions from "../../store/shoe";
 import { ShopShoe } from "./ShopShoe";
@@ -79,13 +80,15 @@ const Shop = () => {
           <div className="shop-container">
             {storeShoesRender(shoes).map((ele) => {
               return (
-                <ShopShoe
-                  count={ele.count}
-                  url={ele.url}
-                  name={ele.name}
-                  price={ele.price}
-                  reviews={ele.reviews}
-                />
+                <NavLink exact to={`/shoes/${ele.id}`}>
+                  <ShopShoe
+                    count={ele.count}
+                    url={ele.url}
+                    name={ele.name}
+                    price={ele.price}
+                    reviews={ele.reviews}
+                  />
+                </NavLink>
               );
             })}
           </div>

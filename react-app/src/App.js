@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Shop from "./components/Shop";
 import { ShopShoe } from "./components/Shop/ShopShoe";
+import Shoe from "./components/Shoe";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       <Switch>
+        <Route path="/shoes/:id">
+          <Shoe />
+        </Route>
         <Route path="/shop">
           <Shop />
         </Route>

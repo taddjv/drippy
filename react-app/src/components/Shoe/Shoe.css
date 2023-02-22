@@ -1,0 +1,101 @@
+.shoe {
+  max-width: 1440px;
+  margin: auto;
+  padding: 14px;
+}
+
+.shoe-container {
+  display: flex;
+  border: 2px solid #5b525f;
+  background: white;
+}
+
+.shoe-right {
+  flex: 2;
+  width: 100%;
+  padding: 14px;
+  border-left: 2px solid #5b525f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.shoe-left {
+  flex: 3;
+}
+
+.shoe-left-picture {
+  width: 100%;
+}
+.s-r-desc {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 28px;
+  border-bottom: 1px solid grey;
+}
+
+.s-r-d-l-brand {
+  font-size: 14px;
+  font-weight: 400;
+}
+.s-r-d-l-b-name:hover {
+  border-bottom: 1px solid black;
+  font-weight: 500;
+}
+.s-r-d-l-b-logo {
+  height: 18px;
+}
+.s-r-d-l-name {
+  font-weight: 500;
+  margin: 14px 0;
+}
+.s-r-d-l-reviews {
+  font-size: 14px;
+  font-weight: 400;
+}
+.s-r-size {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  row-gap: 14px;
+  column-gap: 14px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid grey;
+}
+
+.s-r-s-radio-input {
+  display: none;
+}
+/* .s-r-s-radio-input:checked + .s-r-s-radio-label {
+  background-color: #5b525f;
+  color: white;
+} */
+
+.s-r-s-radio-label-edit {
+  background-color: #5b525f;
+  color: white;
+}
+
+.s-r-s-radio-label {
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid black;
+}
+.s-r-s-button {
+  width: 70%;
+  height: 36px;
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.s-r-s-button:hover {
+  background: #5b525f;
+  color: white;
+}
+.s-r-form {
+  text-align: center;
+  padding-bottom: 28px;
+}

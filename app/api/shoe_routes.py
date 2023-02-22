@@ -27,8 +27,10 @@ def object_as_dict(obj):
 @shoe_routes.route("/<int:id>", methods=["GET"])
 def get_shoe(id):
     shoe = Shoe.query.get(id)
+    final = object_as_dict(shoe)
+    final["reviews"] = shoe.average_reviews()
 
-    return object_as_dict(shoe)
+    return final
 
 
 @shoe_routes.route("/<int:id>", methods=["PUT"])

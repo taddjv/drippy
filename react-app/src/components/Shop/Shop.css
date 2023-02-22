@@ -19,7 +19,7 @@
 }
 
 .shop-container-shoe {
-  border: 2px double #5b525f;
+  border: 2px solid #5b525f;
   max-width: 260px;
   background: white;
   text-align: center;
@@ -58,7 +58,7 @@
   height: 48px;
 
   margin-bottom: 14px;
-  border: 2px double #5b525f;
+  border: 2px solid #5b525f;
   padding-left: 14px;
   font-size: 14px;
 }
@@ -78,7 +78,7 @@
 .s-c-t-s-select {
   height: 48px;
   width: 260px;
-  border: 2px double #5b525f;
+  border: 2px solid #5b525f;
   text-align: center;
   font-size: 18px;
 }
