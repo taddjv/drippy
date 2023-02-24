@@ -47,7 +47,19 @@
 .s-r-d-l-name {
   font-weight: 500;
   margin: 14px 0;
+  height: 23px;
+  width: 300px;
 }
+.s-r-d-l-name-edit {
+  font-weight: 500;
+  margin: 14px 0;
+  height: 23px;
+  width: 300px;
+  font-weight: 500;
+  border: 1px solid black;
+  font-size: 14px;
+}
+
 .s-r-d-l-reviews {
   font-size: 14px;
   font-weight: 400;
@@ -98,4 +110,85 @@
 .s-r-form {
   text-align: center;
   padding-bottom: 28px;
+}
+
+.shoe-bottom {
+  display: flex;
+}
+
+.shoe-reviews {
+  flex: 3;
+  background: white;
+  width: 100%;
+}
+.shoeReview {
+  padding: 14px;
+  display: flex;
+  border: solid 2px #5b525f;
+  justify-content: space-between;
+}
+.sr-right {
+  width: 85%;
+}
+.sr-r-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 14px;
+}
+.sr-r-bottom {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.related-shoe {
+  flex: 2;
+}
+.s-r-d-left {
+  display: flex;
+  flex-direction: column;
+}
+.s-r-d-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#s-r-d-l-brand {
+  height: 22px;
+  width: 30%;
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+
+  font-size: 14px;
+}
+
+.s-r-d-l-name {
+  height: 23px;
+  width: 300px;
+}
+.s-r-d-l-name-edit {
+  font-weight: 500;
+  margin: 14px 0;
+  height: 23px;
+  width: 300px;
+  font-weight: 500;
+  border: 1px solid black;
+  font-size: 14px;
+}
+
+.s-r-d-r-price {
+  text-align: center;
+}
+
+.s-r-d-right > button {
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.s-r-d-right > button:hover {
+  background: #5b525f;
+  color: white;
 }

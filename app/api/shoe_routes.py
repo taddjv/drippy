@@ -29,6 +29,7 @@ def get_shoe(id):
     shoe = Shoe.query.get(id)
     final = object_as_dict(shoe)
     final["reviews"] = shoe.average_reviews()
+    final["brand"] = object_as_dict(shoe.brand)
 
     return final
 

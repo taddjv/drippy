@@ -1,20 +1,19 @@
 import React from "react";
+import { renderStars } from "../../helpers/storeHelpers";
 
-const ShoeReview = () => {
-  const obj = {
-    dateCreated: "Tue, 21 Feb 2023 02:38:30 GMT",
-    description: "i don't like it but wtv",
-    id: 3,
-    shoe_id: 2,
-    stars: 2,
-    user_id: 2,
-    user: { username: "tadddd" },
-  };
-
+const ShoeReview = ({ user, stars, dateCreated, description }) => {
   return (
     <div className="shoeReview">
-      <div className="sr-left">by {obj.user.username}</div>
-      <div className="sr-right"></div>
+      <div className="sr-left">by {user.username}</div>
+      <div className="sr-right">
+        <div className="sr-r-top">
+          <div className="sr-r-t-left">
+            {renderStars(stars, "sr-r-t-left-star")}
+          </div>
+          <div className="sr-r-t-right">{dateCreated}</div>
+        </div>
+        <div className="sr-r-bottom">{description}</div>
+      </div>
     </div>
   );
 };

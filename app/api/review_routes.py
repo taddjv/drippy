@@ -29,8 +29,13 @@ def object_as_dict(obj):
 @review_routes.route("/shoes/<int:id>", methods=["GET"])
 def get_reviews_shoe(id):
     reviews = db.session.query(Review).filter(Review.shoe_id.like(id))
+    final = {"reviews":[]}
+    for review in reviews:
+        final_review = object_as_dict(review)
+        final_review["user"] = object_as_dict(review.user)
+        final["reviews"].append(final_review)
 
-    return {"reviews": [object_as_dict(review) for review in reviews]}
+    return final
 
 
 @review_routes.route("/shoes/<int:id>", methods=["POST"])

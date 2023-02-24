@@ -19,6 +19,13 @@ export const storeShoesRender = (obj) => {
   }
   return final;
 };
+export const storeBrandsRender = (obj) => {
+  const final = [];
+  for (let brand in obj) {
+    final.push(obj[brand]);
+  }
+  return final;
+};
 
 export const storeReviewRender = (obj) => {
   const final = [];

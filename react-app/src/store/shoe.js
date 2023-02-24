@@ -105,7 +105,6 @@ export const postTheShoe = (shoeData) => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
-//! not used yet
 export const putTheShoe = (id, shoeData) => async (dispatch) => {
   const { name, url, price, brand_id } = shoeData;
 
@@ -126,13 +125,6 @@ export const putTheShoe = (id, shoeData) => async (dispatch) => {
     const data = await response.json();
     dispatch(putShoe(data));
     return null;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
   }
 };
 //! not used yet
@@ -173,6 +165,15 @@ export default function shoeReducer(state = initialState, action) {
       newState = action.payload;
       return newState;
     }
+    case PUT_SHOE: {
+      let newState = { ...state };
+      newState["name"] = action.payload.name;
+      newState["url"] = action.payload.url;
+      newState["price"] = action.payload.price;
+      newState["brand_id"] = action.payload.brand_id;
+      return newState;
+    }
+
     default:
       return state;
   }
