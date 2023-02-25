@@ -29,7 +29,6 @@ const deleteShoe = () => ({
   type: DELETE_SHOE,
 });
 
-//! not used yet
 export const getTheShoe = (id) => async (dispatch) => {
   const response = await fetch(`/api/shoes/${id}`, {
     headers: {
@@ -127,7 +126,6 @@ export const putTheShoe = (id, shoeData) => async (dispatch) => {
     return null;
   }
 };
-//! not used yet
 export const deleteTheShoe = (id) => async (dispatch) => {
   const response = await fetch(`/api/shoes/${id}`, {
     method: "DELETE",

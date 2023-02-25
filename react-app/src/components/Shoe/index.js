@@ -22,9 +22,9 @@ const Shoe = () => {
   const shoe = useSelector((state) => state.shoeReducer);
   const brands = useSelector((state) => state.brandReducer);
   const reviews = useSelector((state) => state.reviewReducer);
+  const sessionUser = useSelector((state) => state.session.user);
 
   const [renderShoes, setRenderShoes] = useState(false);
-  const [shoeBrands, setShoeBrands] = useState(false);
 
   const [shoeSize, setShoeSize] = useState("");
   const [editTheShoe, setEditTheShoe] = useState(false);
@@ -34,13 +34,23 @@ const Shoe = () => {
   const [newPrice, setNewPrice] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
+  const [newReview, setNewReview] = useState("");
+  const [newStars, setNewStars] = useState("");
+  const [sortReviews, setSortReviews] = useState("newest");
+
   useEffect(() => {
     dispatch(shoeActions.getTheShoe(id)).then(() => {
       setRenderShoes(true);
     });
-    dispatch(reviewActions.getTheReviews(null, null, id));
+    dispatch(reviewActions.getTheReviews(sortReviews, id));
     dispatch(brandActions.getTheBrands());
   }, []);
+
+  useEffect(() => {
+    dispatch(reviewActions.getTheReviews(sortReviews, id)).then(async (res) => {
+      //   console.log(await res);
+    });
+  }, [sortReviews]);
 
   const radioChange = (e) => {
     setShoeSize(e.target.value);
@@ -67,6 +77,19 @@ const Shoe = () => {
     dispatch(shoeActions.putTheShoe(id, shoeData)).then(() => {
       setEditTheShoe(false);
     });
+  };
+  const addReviewDispatch = (e) => {
+    e.preventDefault();
+    const reviewData = {
+      description: newReview,
+      stars: newStars,
+    };
+    dispatch(reviewActions.postTheReview(reviewData, id, sessionUser)).then(
+      () => {
+        setNewReview("");
+        setNewStars("");
+      }
+    );
   };
 
   return (
@@ -100,17 +123,26 @@ const Shoe = () => {
                   </div>
                   <div className="s-r-d-right">
                     <h3 className="s-r-d-r-price">${shoe.price} USD</h3>
-                    <button onClick={editShoe}>Edit</button>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(shoeActions.deleteTheShoe(id)).then(() => {
-                          history.push("/");
-                        });
-                      }}
-                    >
-                      Delete
-                    </button>
+                    {sessionUser ? (
+                      sessionUser.id === shoe.user_id ? (
+                        <>
+                          {" "}
+                          <button onClick={editShoe}>Edit</button>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              dispatch(reviewActions.deleteTheReview(id)).then(
+                                () => {
+                                  console.log("coooo");
+                                }
+                              );
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      ) : null
+                    ) : null}
                   </div>
                 </>
               ) : (
@@ -179,6 +211,50 @@ const Shoe = () => {
       )}
       <div className="shoe-bottom">
         <div className="shoe-reviews">
+          {/* <div className="s-r-header">Comments </div> */}
+          <form onSubmit={addReviewDispatch} className="s-b-addReview">
+            <select
+              id="s-b-ar-stars"
+              value={newStars}
+              onChange={(e) => {
+                setNewStars(e.target.value);
+              }}
+            >
+              <option value="0">Rate here</option>;
+              <option value="1">One star</option>;
+              <option value="2">Two stars</option>;
+              <option value="3">Three stars</option>;
+              <option value="4">Four stars</option>;
+              <option value="5">Five stars</option>;
+            </select>
+            <textarea
+              className="s-b-ar-review"
+              value={newReview}
+              placeholder="Write your review here !"
+              onChange={(e) => {
+                setNewReview(e.target.value);
+              }}
+            ></textarea>
+            <button type="submit" className="s-b-ar-button">
+              Add Review
+            </button>
+          </form>
+          <div className="s-r-stars">
+            {" "}
+            <select
+              id="s-r-s-stars"
+              value={sortReviews}
+              onChange={(e) => {
+                setSortReviews(e.target.value);
+              }}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>;
+              <option value="high">Highest Rated</option>;
+              <option value="low">Lowest Rated</option>;
+            </select>
+          </div>
+
           {renderShoes &&
             storeReviewRender(reviews).map((ele) => {
               return (
@@ -187,6 +263,8 @@ const Shoe = () => {
                   stars={ele.stars}
                   dateCreated={ele.dateCreated}
                   description={ele.description}
+                  id={ele.id}
+                  currentUser={sessionUser}
                 />
               );
             })}

@@ -120,12 +120,16 @@
   flex: 3;
   background: white;
   width: 100%;
+  border: solid 2px #5b525f;
 }
 .shoeReview {
   padding: 14px;
   display: flex;
-  border: solid 2px #5b525f;
+  border-bottom: solid 2px rgba(91, 82, 95, 0.1);
   justify-content: space-between;
+}
+.shoeReview:last-child {
+  border: none;
 }
 .sr-right {
   width: 85%;
@@ -134,7 +138,6 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 14px;
 }
 .sr-r-bottom {
   font-weight: 500;
@@ -191,4 +194,81 @@
 .s-r-d-right > button:hover {
   background: #5b525f;
   color: white;
+}
+
+.s-b-addReview {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+}
+
+#s-b-ar-stars {
+  height: 22px;
+  width: 20%;
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 14px;
+}
+
+.s-b-ar-review {
+  font-weight: 500;
+  margin: 14px 0;
+  padding-bottom: 23px;
+  padding: 0 14px;
+  font-weight: 500;
+  border: none;
+  font-size: 14px;
+  resize: none;
+}
+
+.s-b-ar-button {
+  width: 20%;
+  /* height: 36px; */
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  align-self: flex-end;
+}
+
+.s-b-ar-button:hover {
+  background: #5b525f;
+  color: white;
+}
+
+.sr-r-b-edit > button {
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.sr-r-b-edit > button:hover {
+  background: #5b525f;
+  color: white;
+}
+
+.sr-r-b-desc {
+  margin: 14px 0;
+}
+.s-r-stars {
+  width: 100%;
+  /* text-align: end; */
+  border-bottom: solid 2px rgba(91, 82, 95, 0.1);
+}
+
+#s-r-s-stars {
+  height: 22px;
+  width: 20%;
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 14px;
+  margin: 14px;
 }

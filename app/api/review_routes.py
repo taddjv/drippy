@@ -26,9 +26,17 @@ def object_as_dict(obj):
 
 
 
-@review_routes.route("/shoes/<int:id>", methods=["GET"])
-def get_reviews_shoe(id):
-    reviews = db.session.query(Review).filter(Review.shoe_id.like(id))
+@review_routes.route("/shoes/<int:id>/sort/<string:sort>", methods=["GET"])
+def get_reviews_shoe(id,sort):
+    reviews = None
+    if sort == "newest":
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.dateCreated.desc())
+    if sort == "oldest":
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.dateCreated)
+    if sort == "high":
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.stars.desc())
+    if sort == "low":
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.stars)
     final = {"reviews":[]}
     for review in reviews:
         final_review = object_as_dict(review)

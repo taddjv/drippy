@@ -7,25 +7,24 @@ const getReviews = (reviews) => ({
   type: GET_REVIEWS,
   payload: reviews,
 });
-const postReview = (review) => ({
+const postReview = (review, username, user_id) => ({
   type: POST_REVIEW,
   payload: review,
+  username: username,
+  user_id: user_id,
 });
-const putReview = (review) => ({
+const putReview = (review, id) => ({
   type: PUT_REVIEW,
   payload: review,
+  id: id,
 });
-const deleteReview = () => ({
+const deleteReview = (id) => ({
   type: DELETE_REVIEW,
+  id: id,
 });
 
-export const getTheReviews = (sort, search, id) => async (dispatch) => {
-  //   const response = await fetch(`/api/reviews/${sort}/search/${search}/`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  const response = await fetch(`/api/reviews/shoes/${id}`, {
+export const getTheReviews = (sort, id) => async (dispatch) => {
+  const response = await fetch(`/api/reviews/shoes/${id}/sort/${sort}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -40,26 +39,28 @@ export const getTheReviews = (sort, search, id) => async (dispatch) => {
   }
 };
 
-export const postTheReview = (reviewData) => async (dispatch) => {
-  const { description, stars, shoe_id } = reviewData;
+export const postTheReview =
+  (reviewData, shoe_id, user) => async (dispatch) => {
+    const { description, stars } = reviewData;
 
-  const response = await fetch(`/api/reviews/shoes/${shoe_id}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    const response = await fetch(`/api/reviews/shoes/${shoe_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-    body: JSON.stringify({
-      description,
-      stars,
-    }),
-  });
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(postReview(data));
-    return data;
-  }
-};
+      body: JSON.stringify({
+        description,
+        stars,
+      }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(postReview(data, user.username, user.id));
+
+      return data;
+    }
+  };
 
 export const putTheReview = (reviewData, id) => async (dispatch) => {
   const { description, stars } = reviewData;
@@ -77,7 +78,7 @@ export const putTheReview = (reviewData, id) => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(putReview(data));
+    dispatch(putReview(data, id));
     return data;
   }
 };
@@ -89,7 +90,7 @@ export const deleteTheReview = (id) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(deleteReview());
+    dispatch(deleteReview(id));
     return data;
   }
 };
@@ -109,6 +110,42 @@ export default function reviewReducer(state = initialState, action) {
       } else {
         return [];
       }
+    }
+    case POST_REVIEW: {
+      let newState = { ...state };
+
+      newState[action.payload.id] = action.payload;
+      newState[action.payload.id]["user"] = {
+        username: action.username,
+        id: action.user_id,
+      };
+      return newState;
+    }
+    case PUT_REVIEW: {
+      let newState = { ...state };
+      let reviewIndex = Object.keys(newState).find(
+        (key) => newState[key]["id"] === action.id
+      );
+      newState[reviewIndex]["stars"] = action.payload.stars;
+      newState[reviewIndex]["description"] = action.payload.description;
+      return newState;
+    }
+    case PUT_REVIEW: {
+      let newState = { ...state };
+      let reviewIndex = Object.keys(newState).find(
+        (key) => newState[key]["id"] === action.id
+      );
+      newState[reviewIndex]["stars"] = action.payload.stars;
+      newState[reviewIndex]["description"] = action.payload.description;
+      return newState;
+    }
+    case DELETE_REVIEW: {
+      let newState = { ...state };
+      let reviewIndex = Object.keys(newState).find(
+        (key) => newState[key]["id"] === action.id
+      );
+      delete newState[reviewIndex];
+      return newState;
     }
     default:
       return state;
