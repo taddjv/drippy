@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User,Cart, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from sqlalchemy import inspect
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -17,6 +18,10 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
+
 
 @auth_routes.route('/')
 def authenticate():
@@ -24,7 +29,10 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        user = object_as_dict(current_user)
+        del user["hashed_password"]
+        user["cart"] = object_as_dict(current_user.cart[0])
+        return user
     return {'errors': ['Unauthorized']}
 
 

@@ -12,6 +12,7 @@ import ShoeReview from "./ShoeReview";
 import * as shoeActions from "../../store/shoe";
 import * as brandActions from "../../store/brand";
 import * as reviewActions from "../../store/review";
+import * as cartActions from "../../store/cart";
 import "./Shoe.css";
 
 const Shoe = () => {
@@ -23,6 +24,7 @@ const Shoe = () => {
   const brands = useSelector((state) => state.brandReducer);
   const reviews = useSelector((state) => state.reviewReducer);
   const sessionUser = useSelector((state) => state.session.user);
+  const cart = useSelector((state) => state.cartReducer);
 
   const [renderShoes, setRenderShoes] = useState(false);
 
@@ -47,9 +49,9 @@ const Shoe = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(reviewActions.getTheReviews(sortReviews, id)).then(async (res) => {
-      //   console.log(await res);
-    });
+    dispatch(reviewActions.getTheReviews(sortReviews, id)).then(
+      async (res) => {}
+    );
   }, [sortReviews]);
 
   const radioChange = (e) => {
@@ -57,6 +59,17 @@ const Shoe = () => {
   };
   const addToCart = (e) => {
     e.preventDefault();
+    const data = {
+      shoe_id: id,
+      quantity: 1,
+      shoe_size: Number(shoeSize.slice(5)),
+    };
+
+    if (shoeSize) {
+      dispatch(cartActions.postTheCartItem(data, cart.id)).catch(
+        async (res) => {}
+      );
+    }
   };
   const deleteShoe = (e) => {
     e.preventDefault();

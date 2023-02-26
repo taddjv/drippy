@@ -5,6 +5,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import YourCart from "./YourCart";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -41,9 +42,15 @@ function ProfileButton({ user }) {
     <>
       {user ? (
         <>
-          <NavLink className="n-r-link" exact to="/my-cart">
-            <i className="fa fa-shopping-cart" size="m" />
-          </NavLink>
+          {/* <NavLink className="n-r-link" exact to="/my-cart"> */}
+          <i className="fa fa-shopping-cart n-r-link" size="m" />
+          {/* </NavLink> */}
+          <OpenModalButton
+            onItemClick={closeMenu}
+            modalComponent={<YourCart />}
+            className="n-r-link"
+            button={false}
+          />
           <button className="n-r-button" onClick={openMenu}>
             Hi {user.username}
           </button>
@@ -68,41 +75,20 @@ function ProfileButton({ user }) {
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
+              className="n-r-b-button"
+              button={true}
             />
 
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
+              className="n-r-b-button"
+              button={true}
             />
           </>
         )}
       </div>
-      {/* <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
-      </ul> */}
     </>
   );
 }

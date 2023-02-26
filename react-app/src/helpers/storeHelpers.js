@@ -12,6 +12,28 @@ export const renderStars = (stars, cl) => {
   return finalStars;
 };
 
+export const dataRender = (obj) => {
+  const final = [];
+
+  for (let data in obj) {
+    if (Number(data) == data) {
+      final.push(obj[data]);
+    }
+  }
+  return final;
+};
+export const cartData = (cartObj) => {
+  let final = { itemCount: 0, total: 0 };
+
+  for (let item in cartObj) {
+    if (item == Number(item)) {
+      final["itemCount"]++;
+      final["total"] += cartObj[item].shoe.price * cartObj[item].quantity;
+    }
+  }
+  return final;
+};
+
 export const storeShoesRender = (obj) => {
   const final = [];
   for (let shoe in obj) {

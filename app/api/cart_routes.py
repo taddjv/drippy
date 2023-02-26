@@ -24,29 +24,28 @@ def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
             for c in inspect(obj).mapper.column_attrs}
 
-def cart_formatter(rows):
-    final = {"cart_items":[]}
-    for row in rows:
-        finalRow = object_as_dict(row)
-        finalRow["shoe"] = object_as_dict(row.shoe)
-        final["cart_items"].append(finalRow)
-    return final
+# def duplicate_items(id,shoe_id):
+#     cart = Cart.query.get(id)
+#     for cart_item in cart.cart_items:
+#         if str(cart_item.shoe.id) == str(shoe_id):
+#             print(str(cart_item.shoe.id) == str(shoe_id))
+#             return False
+#     return True
+def cart_item_formatter(cart_item):
+    final =  object_as_dict(cart_item)
+    final["shoe"] = object_as_dict(cart_item.shoe)
 
-def duplicate_items(id,shoe_id):
-    cart = Cart.query.get(id)
-    for cart_item in cart.cart_items:
-        if str(cart_item.shoe.id) == str(shoe_id):
-            print(str(cart_item.shoe.id) == str(shoe_id))
-            return False
-    return True
+    return final
 
 @cart_routes.route("/<int:id>", methods=["GET"])
 @login_required
 def get_cart_items_cart(id):
     cart = Cart.query.get(id)
     if (cart.user_id == current_user.id):
-        cart_items = db.session.query(CartItem).filter(CartItem.cart_id.like(id))
-        return cart_formatter(cart_items)
+        final = object_as_dict(cart)
+        final["cart_items"] = [cart_item_formatter(item) for item in cart.cart_items  ]
+        return final
+
     else:
         return {"message": "you do not own this cart"}
 
@@ -57,12 +56,11 @@ def post_cart_item(id):
     form = CartItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    if (duplicate_items(id,form.data['shoe_id']) == False):
-        return {"message": "item already in cart"}
-
+    # if (duplicate_items(id,form.data['shoe_id']) == False):
+    #     return {"message": "item already in cart"}
     if form.validate_on_submit():
         cart_item = CartItem(
-            shoe_id=form.data['shoe_id'],quantity=form.data['quantity'],cart_id=id,user_id=current_user.id)
+            shoe_id=form.data['shoe_id'],quantity=form.data['quantity'],shoe_size=form.data['shoe_size'],cart_id=id,user_id=current_user.id)
         db.session.add(cart_item)
         db.session.commit()
         final = object_as_dict(cart_item)

@@ -6,6 +6,8 @@ function OpenModalButton({
   buttonText, // text of the button that opens the modal
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
   onModalClose, // optional: callback function that will be called once the modal is closed
+  className,
+  button,
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -14,12 +16,17 @@ function OpenModalButton({
     setModalContent(modalComponent);
     if (onButtonClick) onButtonClick();
   };
-
-  return (
-    <button className="n-r-b-button" onClick={onClick}>
-      {buttonText}
-    </button>
-  );
+  if (button) {
+    return (
+      <button className={className} onClick={onClick}>
+        {buttonText}
+      </button>
+    );
+  } else {
+    return (
+      <i className="fa fa-shopping-cart n-r-link" size="m" onClick={onClick} />
+    );
+  }
 }
 
 export default OpenModalButton;
