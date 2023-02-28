@@ -71,15 +71,6 @@ def get_fav_shoes():
     shoe3 = Shoe.query.get(3)
     return {"shoe1":object_as_dict(shoe1),"shoe2":object_as_dict(shoe2),"shoe3":object_as_dict(shoe3)}
 
-# @shoe_routes.route("/", methods=["GET"])
-# def get_all_shoes():
-#     shoes = db.session.query(Shoe).all()
-#     final = {"shoes":[]}
-#     for shoe in shoes:
-#         final_shoe = object_as_dict(shoe)
-#         final_shoe["reviews"] = shoe.average_reviews()
-#         final["shoes"].append(final_shoe)
-#     return final
 
 @shoe_routes.route("/", methods=["POST"])
 @login_required

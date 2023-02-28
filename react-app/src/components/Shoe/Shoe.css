@@ -272,3 +272,14 @@
   font-size: 14px;
   margin: 14px;
 }
+.s-r-f-errors {
+  margin-bottom: 14px;
+}
+.s-r-f-success {
+  color: green;
+}
+.option-error {
+  color: red;
+  border: 1px solid red;
+  background: lightgrey;
+}

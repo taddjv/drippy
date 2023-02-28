@@ -24,13 +24,7 @@ def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
             for c in inspect(obj).mapper.column_attrs}
 
-# def duplicate_items(id,shoe_id):
-#     cart = Cart.query.get(id)
-#     for cart_item in cart.cart_items:
-#         if str(cart_item.shoe.id) == str(shoe_id):
-#             print(str(cart_item.shoe.id) == str(shoe_id))
-#             return False
-#     return True
+
 def cart_item_formatter(cart_item):
     final =  object_as_dict(cart_item)
     final["shoe"] = object_as_dict(cart_item.shoe)
@@ -55,6 +49,14 @@ def get_cart_items_cart(id):
 def post_cart_item(id):
     form = CartItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
+    cart_item = db.session.query(CartItem).filter(CartItem.shoe_size.like("10"))
+    for item in cart_item:
+        print(item,"--------------------------------")
+
+    cart = CartItem.query.get(1)
+    # ,CartItem.shoe_size.like(form.data['shoe_size'])
+    # print((),"--------------------------------",form.data['shoe_id'])
 
     # if (duplicate_items(id,form.data['shoe_id']) == False):
     #     return {"message": "item already in cart"}

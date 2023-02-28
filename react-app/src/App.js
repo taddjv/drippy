@@ -8,13 +8,17 @@ import Home from "./components/Home";
 import Shop from "./components/Shop";
 import { ShopShoe } from "./components/Shop/ShopShoe";
 import Shoe from "./components/Shoe";
+import Checkout from "./components/Checkout";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(async (res) => {
-      dispatch(cartActions.getTheCart(await res.cart.id));
+      if (await res) {
+        dispatch(cartActions.getTheCart(await res.cart.id));
+      }
+
       setIsLoaded(true);
     });
   }, [dispatch]);
@@ -25,6 +29,9 @@ function App() {
       <Switch>
         <Route path="/shoes/:id">
           <Shoe />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
         <Route path="/shop">
           <Shop />

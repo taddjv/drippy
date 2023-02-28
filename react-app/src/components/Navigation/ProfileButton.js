@@ -10,6 +10,7 @@ import YourCart from "./YourCart";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -37,20 +38,26 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
-
   return (
     <>
+      {showCart && (
+        <>
+          <div
+            onClick={() => setShowCart(false)}
+            className="yourCart-background"
+          >
+            <YourCart />
+          </div>
+        </>
+      )}
       {user ? (
         <>
-          {/* <NavLink className="n-r-link" exact to="/my-cart"> */}
-          <i className="fa fa-shopping-cart n-r-link" size="m" />
-          {/* </NavLink> */}
-          <OpenModalButton
-            onItemClick={closeMenu}
-            modalComponent={<YourCart />}
-            className="n-r-link"
-            button={false}
+          <i
+            onClick={() => setShowCart(true)}
+            className="fa fa-shopping-cart n-r-link"
+            size="m"
           />
+
           <button className="n-r-button" onClick={openMenu}>
             Hi {user.username}
           </button>

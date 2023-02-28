@@ -27,6 +27,9 @@ const Shoe = () => {
   const cart = useSelector((state) => state.cartReducer);
 
   const [renderShoes, setRenderShoes] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
+  const [errorClass, setErrorClass] = useState("");
 
   const [shoeSize, setShoeSize] = useState("");
   const [editTheShoe, setEditTheShoe] = useState(false);
@@ -39,6 +42,8 @@ const Shoe = () => {
   const [newReview, setNewReview] = useState("");
   const [newStars, setNewStars] = useState("");
   const [sortReviews, setSortReviews] = useState("newest");
+
+  // const radioError = errors.length ? "option-error" : null;
 
   useEffect(() => {
     dispatch(shoeActions.getTheShoe(id)).then(() => {
@@ -53,6 +58,11 @@ const Shoe = () => {
       async (res) => {}
     );
   }, [sortReviews]);
+  useEffect(() => {
+    if (shoeSize) {
+      setErrorClass(null);
+    }
+  }, [shoeSize]);
 
   const radioChange = (e) => {
     setShoeSize(e.target.value);
@@ -66,9 +76,20 @@ const Shoe = () => {
     };
 
     if (shoeSize) {
-      dispatch(cartActions.postTheCartItem(data, cart.id)).catch(
-        async (res) => {}
-      );
+      console.log(shoeSize);
+      dispatch(cartActions.postTheCartItem(data, cart.id))
+        .then(() => {
+          setShoeSize("");
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 2000);
+          setErrors([]);
+        })
+        .catch(async (res) => {});
+    } else {
+      setErrors(["Please pick a size"]);
+      setErrorClass("option-error");
     }
   };
   const deleteShoe = (e) => {
@@ -214,9 +235,20 @@ const Shoe = () => {
               )}
             </div>
             <div className="s-r-size">
-              {renderShoeSize(shoeSize, radioChange)}
+              {renderShoeSize(shoeSize, radioChange, errorClass)}
             </div>
             <form className="s-r-form" onSubmit={addToCart}>
+              {success && (
+                <div className="s-r-f-success">
+                  Shoe added ot cart successfully
+                </div>
+              )}
+
+              <ul className="s-r-f-errors">
+                {errors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
+                ))}
+              </ul>
               <button className="s-r-s-button">Add To Cart</button>
             </form>
           </div>

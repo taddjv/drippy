@@ -10,7 +10,7 @@ const YourCart = () => {
   return (
     <>
       {cart && (
-        <div className="yourCart">
+        <div onClick={(e) => e.stopPropagation()} className="yourCart">
           <div className="yc-top">
             <h1 className="yc-title">Your Cart</h1>
             {dataRender(cart).map((ele) => (

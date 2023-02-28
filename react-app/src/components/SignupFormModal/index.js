@@ -20,7 +20,7 @@ function SignupFormModal() {
     if (password === confirmPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        setErrors(data);
+        setErrors(data.map((ele) => ele.slice(ele.indexOf(":") + 2)));
       } else {
         closeModal();
       }

@@ -42,6 +42,9 @@
 .l-i-c-r-f-password {
   align-self: flex-start;
 }
+.l-i-c-r-f-email {
+  margin-top: 14px;
+}
 
 #email,
 #password {

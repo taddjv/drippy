@@ -61,13 +61,13 @@ export const capFirstLetter = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
-export const renderShoeSize = (Value, func) => {
+export const renderShoeSize = (Value, func, className) => {
   const final = [];
   for (let i = 4; i <= 15; i++) {
     final.push(
       <>
         <input
-          className="s-r-s-radio-input"
+          className={`s-r-s-radio-input`}
           type="radio"
           name="shoe-radio"
           id={`radio${i}`}
@@ -79,7 +79,7 @@ export const renderShoeSize = (Value, func) => {
         <label
           className={`s-r-s-radio-label ${
             Value.slice(5) == i ? "s-r-s-radio-label-edit" : null
-          }`}
+          } ${className}`}
           for={`radio${i}`}
         >
           {i}
@@ -100,7 +100,7 @@ export const renderShoeSize = (Value, func) => {
         <label
           className={`s-r-s-radio-label ${
             Value.slice(5) == i + 0.5 ? "s-r-s-radio-label-edit" : null
-          }`}
+          } ${className}`}
           for={`radio${i + 0.5}`}
         >
           {i + 0.5}

@@ -17,10 +17,7 @@
 .navigation-left > a {
   margin-left: 20px;
 }
-.navigation-right > button,
-.navigation-right > div {
-  margin-right: 20px;
-}
+
 .navigation-center > a {
   margin: 0 20px;
   color: white;
@@ -50,6 +47,7 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  margin-right: 20px;
 }
 .n-r-button:hover {
   border: 1px white solid;
@@ -82,17 +80,31 @@
 .yourCart {
   width: 480px;
   height: 100vh;
-  padding: 14px;
+  /* padding: 14px; */
+  background: white;
+  position: fixed;
+  right: 0;
 }
 .yc-top {
   height: 80%;
   overflow-y: scroll;
+  padding: 14px;
 }
 .yc-title {
   margin-top: 48px;
   margin-bottom: 24px;
+  text-align: start;
 }
 
+.yourCart-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
 .yc-cartItem {
   display: flex;
   width: 100%;
@@ -109,6 +121,7 @@
 .yc-ci-r-t-left > h2 {
   font-size: 12px;
   font-weight: 400;
+  text-align: start;
 }
 .yc-ci-r-t-right {
   height: 28px;
@@ -156,7 +169,7 @@
 }
 
 .yc-bottom {
-  padding: 14px 0;
+  padding: 14px;
 }
 .yc-b-top {
   display: flex;

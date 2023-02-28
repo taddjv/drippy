@@ -17,7 +17,7 @@ function LoginFormModal() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      setErrors(data.map((ele) => ele.slice(ele.indexOf(":") + 2)));
     } else {
       closeModal();
     }
