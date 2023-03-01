@@ -46,7 +46,7 @@ function ProfileButton({ user }) {
             onClick={() => setShowCart(false)}
             className="yourCart-background"
           >
-            <YourCart />
+            <YourCart checkout={false} />
           </div>
         </>
       )}

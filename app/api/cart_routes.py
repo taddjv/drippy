@@ -50,16 +50,15 @@ def post_cart_item(id):
     form = CartItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    cart_item = db.session.query(CartItem).filter(CartItem.shoe_size.like("10"))
-    for item in cart_item:
-        print(item,"--------------------------------")
+    cart_item_size = db.session.query(CartItem).filter(CartItem.shoe_size.like(str(form.data['shoe_size'])))
+    cart_item_id = db.session.query(CartItem).filter(CartItem.shoe_id.like(form.data['shoe_id']))
 
-    cart = CartItem.query.get(1)
-    # ,CartItem.shoe_size.like(form.data['shoe_size'])
-    # print((),"--------------------------------",form.data['shoe_id'])
+    for item in cart_item_size:
+        for cart_item in cart_item_id:
+            if (item.id == cart_item.id):
+                raise ValueError('A very specific bad thing happened.')
 
-    # if (duplicate_items(id,form.data['shoe_id']) == False):
-    #     return {"message": "item already in cart"}
+
     if form.validate_on_submit():
         cart_item = CartItem(
             shoe_id=form.data['shoe_id'],quantity=form.data['quantity'],shoe_size=form.data['shoe_size'],cart_id=id,user_id=current_user.id)

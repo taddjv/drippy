@@ -54,10 +54,13 @@ export const postTheReview =
         stars,
       }),
     });
+    const data = await response.json();
+
     if (response.ok) {
-      const data = await response.json();
       dispatch(postReview(data, user.username, user.id));
 
+      return data;
+    } else {
       return data;
     }
   };

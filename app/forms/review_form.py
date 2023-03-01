@@ -12,5 +12,5 @@ def valid_rating(form,field):
 
 
 class ReviewForm(FlaskForm):
-    description = StringField('description', validators=[DataRequired()])
-    stars = IntegerField("stars", validators=[DataRequired(),valid_rating])
+    description = StringField('description', validators=[DataRequired("You must add a description")])
+    stars = IntegerField("stars", validators=[DataRequired("You can't give 0 stars"),valid_rating])

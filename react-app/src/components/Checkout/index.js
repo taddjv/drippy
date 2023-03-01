@@ -1,67 +1,160 @@
-import React from "react";
+import React, { useState } from "react";
+import YourCart from "../Navigation/YourCart";
+import { optionState } from "../../helpers/storeHelpers";
+import "./Checkout.css";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronDown,
+  faCreditCard,
+  faDollar,
+  faMoneyBill,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Checkout = () => {
+  const [showShipping, setShowShipping] = useState(true);
+  const [showPayment, setShowPayment] = useState(false);
+
+  const [state, setState] = useState(null);
   return (
     <div className="cart">
       <div className="cart-left">
-        <div className="cart-l-shipping"></div>
-        <div className="cart-l-payment"></div>
+        <div className="cart-l-shipping">
+          <h1 className="c-l-s-title">
+            <i class="fa fa-location-arrow" aria-hidden="true"></i> Shipping
+          </h1>
+          {showShipping && (
+            <>
+              {" "}
+              <label className="c-l-s-name-label" for="name">
+                Full Name*
+              </label>
+              <input name="name" className="c-l-s-name" type="text"></input>
+              <label className="c-l-s-name-label" for="country">
+                Country*
+              </label>
+              <select name="country" className="c-l-s-country">
+                <option></option>
+                <option>United States</option>
+                <option>Canada</option>
+              </select>
+              <label className="c-l-s-name-label" for="address">
+                Street Address*
+              </label>
+              <input
+                name="address"
+                className="c-l-s-address"
+                type="text"
+              ></input>
+              <label className="c-l-s-name-label" for="app">
+                Apartment, Building (optional)
+              </label>
+              <input className="c-l-s-app" type="text" name="app"></input>
+              <label className="c-l-s-name-label" for="city">
+                City*
+              </label>
+              <input className="c-l-s-city" type="text" name="city"></input>
+              <div className="c-l-s-stateZip">
+                <div className="c-l-s-sz-left">
+                  <label className="c-l-s-name-labe" for="state">
+                    State/Province
+                  </label>
+                  <select
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
+                    className="c-l-s-state"
+                    name="state"
+                  >
+                    {optionState()}
+                  </select>
+                </div>
+                <div className="c-l-s-sz-right">
+                  <label className="c-l-s-name-labe" for="code">
+                    Postal Code
+                  </label>
+                  <input className="c-l-s-code" type="text" name="code"></input>
+                </div>
+              </div>
+              <label className="c-l-s-name-label" for="state">
+                Phone Number
+              </label>
+              <input className="c-l-s-number" type="number" for="phone"></input>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowShipping(false);
+                  setShowPayment(true);
+                }}
+                className="c-l-s-button"
+                name="phone"
+              >
+                Continue to payment
+              </button>
+            </>
+          )}
+        </div>
+        <div className="cart-l-payment">
+          <h1 className="c-l-s-title">
+            <i class="fa fa-check" aria-hidden="true"></i> Payment
+          </h1>
+          {showPayment && (
+            <>
+              <div className="c-l-card">
+                <div className="c-l-c-top">
+                  <div className="c-l-c-left">
+                    <input type="radio" name="payment" id="card"></input>
+                    <label className="c-l-c-l-label" for="card">
+                      Credit Card
+                    </label>
+                  </div>
+                  <div className="c-l-c-right">
+                    <FontAwesomeIcon
+                      className={`c-l-c-r-cc`}
+                      icon={faCreditCard}
+                    />
+                  </div>
+                </div>
+
+                <div className="c-l-c-bottom">
+                  <input
+                    className="c-l-c-b-number"
+                    type="number"
+                    placeholder={`Credit Card Number`}
+                  ></input>
+                  <input
+                    className="c-l-c-b-date"
+                    type="number"
+                    placeholder={`MM/YY`}
+                  ></input>
+                  <input
+                    className="c-l-c-b-cvc"
+                    type="number"
+                    placeholder={`CVC`}
+                  ></input>
+                </div>
+              </div>
+              <div className="c-l-credit">
+                <div className="c-l-cc-left">
+                  <input type="radio" name="payment" id="card"></input>
+                  <label className="c-l-c-l-label" for="card">
+                    Store Credit
+                  </label>
+                </div>
+                <div className="c-l-cc-right">
+                  {`66654 `}
+                  <FontAwesomeIcon className={`c-l-c-r-cc`} icon={faDollar} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-      <div className="cart-right"></div>
+      <div className="cart-right">
+        <YourCart checkout={true} state={state} />
+      </div>
     </div>
   );
 };
 
 export default Checkout;
-
-// Alabama	9.22%
-// Alaska	1.76%
-// Arizona		8.40%
-// Arkansas	9.51%
-// California (b)		8.68%
-// Colorado	7.72%
-// Connecticut 6.35%
-// Delaware		0.00%
-// D.C.	6.00%
-// Florida	7.08%
-// Georgia 7.32%
-// Hawaii (c)	4.44%
-// Idaho	6.03%
-// Illinois	8.82%
-// Indiana	7.00%
-// Iowa	6.94%
-// Kansas	8.69%
-// Kentucky		6.00%
-// Louisiana	9.52%
-// Maine		5.50%
-// Maryland		6.00%
-// Massachusetts	6.25%
-// Michigan	6.00%
-// Minnesota	7.46%
-// Mississippi		7.07%
-// Missouri	8.25%
-// Montana (d)	0.00%
-// Nebraska	6.94%
-// Nevada	8.23%
-// New Hampshire		0.00%
-// New Jersey (e)		6.60%
-// New Mexico (c)		7.83%
-// New York	8.52%
-// North Carolina		6.98%
-// North Dakota	6.96%
-// Ohio	7.23%
-// Oklahoma	8.95%
-// Oregon	0.00%
-// Pennsylvania	6.34%
-// Rhode Island	7.00%
-// South Carolina	7.46%
-// South Dakota (c)		6.40%
-// Tennessee		9.55%
-// Texas	8.19%
-// Utah (b)	7.19%
-// Vermont		6.24%
-// Virginia (b)	5.73%
-// Washington		9.23%
-// West Virginia		6.50%
-// Wisconsin		5.43%
-// Wyoming	5.33%

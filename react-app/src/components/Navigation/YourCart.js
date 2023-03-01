@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { dataRender, cartData } from "../../helpers/storeHelpers";
+import {
+  dataRender,
+  cartData,
+  taxCalculator,
+} from "../../helpers/storeHelpers";
 import * as cartActions from "../../store/cart";
 
-const YourCart = () => {
+const YourCart = ({ checkout, code, state }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer);
+  const finalTotal =
+    cartData(cart).total + taxCalculator(cartData(cart).total, state);
 
   return (
     <>
       {cart && (
-        <div onClick={(e) => e.stopPropagation()} className="yourCart">
-          <div className="yc-top">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`yourCart ${
+            checkout ? "yourCartCheckout" : "yourCartModal"
+          }`}
+        >
+          <div className={`${checkout ? "yc-top-checkout" : "yc-top"}`}>
             <h1 className="yc-title">Your Cart</h1>
             {dataRender(cart).map((ele) => (
               <div className="yc-cartItem">
@@ -78,15 +89,58 @@ const YourCart = () => {
           </div>
 
           <div className="yc-bottom">
-            <div className="yc-b-top">
-              <div className="yc-b-t-left">
-                <b>Subtotal </b>({cartData(cart).itemCount} items)
-              </div>
-              <div className="yc-b-t-right">
-                <b>${cartData(cart).total} USD</b>
-              </div>
-            </div>
-            <button className="yc-b-bottom">Continue to Checkout</button>
+            {checkout ? (
+              <>
+                <div className="yc-b-top-checkout">
+                  <div>
+                    <div className="yc-b-t-left">Subtotal</div>
+                    <div className="yc-b-t-right">
+                      ${cartData(cart).total} USD
+                    </div>
+                  </div>
+                  <div>
+                    <div className="yc-b-t-left">Promo Code</div>
+                    <div className="yc-b-t-right-promo">-$0 USD</div>
+                  </div>
+                  <div>
+                    <div className="yc-b-t-left">Sales Tax</div>
+                    <div className="yc-b-t-right">
+                      $
+                      {Math.round(
+                        taxCalculator(cartData(cart).total, state) * 100
+                      ) / 100}{" "}
+                      USD
+                    </div>
+                  </div>
+                  <div>
+                    <div className="yc-b-t-left">Shipping</div>
+                    <div className="yc-b-t-right">FREE</div>
+                  </div>
+
+                  <div>
+                    <div className="yc-b-t-left">
+                      <b>Total </b>
+                    </div>
+                    <div className="yc-b-t-right">
+                      <b>${finalTotal} USD</b>
+                    </div>
+                  </div>
+                </div>
+                <button className="yc-b-bottom">Place Order</button>
+              </>
+            ) : (
+              <>
+                <div className="yc-b-top">
+                  <div className="yc-b-t-left">
+                    <b>Subtotal </b>({cartData(cart).itemCount} items)
+                  </div>
+                  <div className="yc-b-t-right">
+                    <b>${cartData(cart).total} USD</b>
+                  </div>
+                </div>
+                <button className="yc-b-bottom">Continue to Checkout</button>
+              </>
+            )}
           </div>
         </div>
       )}

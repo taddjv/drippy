@@ -14,6 +14,7 @@ const ShoeReview = ({
   const dispatch = useDispatch();
 
   const [editReview, setEditReview] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const [newStars, setNewStars] = useState("");
   const [newDescription, setNewDescription] = useState("");
@@ -25,7 +26,14 @@ const ShoeReview = ({
       stars: newStars || stars,
     };
     dispatch(reviewsActions.putTheReview(reviewData, id)).then(async (res) => {
-      setEditReview(false);
+      const data = await res;
+
+      if (data.errors) {
+        setErrors(data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2)));
+      } else {
+        setEditReview(false);
+        setErrors([]);
+      }
     });
   };
   return (
@@ -55,9 +63,7 @@ const ShoeReview = ({
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(reviewsActions.deleteTheReview(id)).then(() => {
-                        console.log("goooo");
-                      });
+                      dispatch(reviewsActions.deleteTheReview(id));
                     }}
                   >
                     Delete
@@ -69,6 +75,11 @@ const ShoeReview = ({
         </div>
       ) : (
         <div className="sr-right">
+          <ul className="s-r-f-errors">
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
           <div className="sr-r-top">
             <div className="sr-r-t-left">
               <input

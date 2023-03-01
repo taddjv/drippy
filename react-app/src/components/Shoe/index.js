@@ -13,6 +13,7 @@ import * as shoeActions from "../../store/shoe";
 import * as brandActions from "../../store/brand";
 import * as reviewActions from "../../store/review";
 import * as cartActions from "../../store/cart";
+import { authenticate } from "../../store/session";
 import "./Shoe.css";
 
 const Shoe = () => {
@@ -28,7 +29,9 @@ const Shoe = () => {
 
   const [renderShoes, setRenderShoes] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [reviewErrors, setReviewErrors] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [success2, setSuccess2] = useState(false);
   const [errorClass, setErrorClass] = useState("");
 
   const [shoeSize, setShoeSize] = useState("");
@@ -43,9 +46,12 @@ const Shoe = () => {
   const [newStars, setNewStars] = useState("");
   const [sortReviews, setSortReviews] = useState("newest");
 
-  // const radioError = errors.length ? "option-error" : null;
-
   useEffect(() => {
+    dispatch(authenticate()).then(async (res) => {
+      if (await res) {
+        dispatch(cartActions.getTheCart(await res.cart.id));
+      }
+    });
     dispatch(shoeActions.getTheShoe(id)).then(() => {
       setRenderShoes(true);
     });
@@ -76,24 +82,29 @@ const Shoe = () => {
     };
 
     if (shoeSize) {
-      console.log(shoeSize);
       dispatch(cartActions.postTheCartItem(data, cart.id))
-        .then(() => {
-          setShoeSize("");
-          setSuccess(true);
-          setTimeout(() => {
-            setSuccess(false);
-          }, 2000);
-          setErrors([]);
+        .then(async (res) => {
+          const data = await res;
+          if (!sessionUser) {
+            setErrors(["You must be signed in to order a shoe."]);
+          } else {
+            setShoeSize("");
+            setSuccess(true);
+            setTimeout(() => {
+              setSuccess(false);
+            }, 2000);
+            setErrors([]);
+          }
         })
-        .catch(async (res) => {});
+        .catch(async (res) => {
+          const data = await res;
+          setSuccess(false);
+          setErrors(["You have already selected this shoe."]);
+        });
     } else {
       setErrors(["Please pick a size"]);
       setErrorClass("option-error");
     }
-  };
-  const deleteShoe = (e) => {
-    e.preventDefault();
   };
 
   const editShoe = (e) => {
@@ -119,9 +130,30 @@ const Shoe = () => {
       stars: newStars,
     };
     dispatch(reviewActions.postTheReview(reviewData, id, sessionUser)).then(
-      () => {
-        setNewReview("");
-        setNewStars("");
+      async (res) => {
+        const data = await res;
+        if (!sessionUser) {
+          setReviewErrors(["You must be logged in to give this shoe a review"]);
+        } else if (data.errors) {
+          setReviewErrors(
+            data.errors.map((ele) => {
+              if (ele.includes("description")) {
+                return "You need a description to write a review.";
+              }
+              if (ele.includes("stars")) {
+                return "You must give the rating some stars.";
+              }
+            })
+          );
+        } else {
+          setNewReview("");
+          setNewStars("");
+          setReviewErrors([]);
+          setSuccess2(true);
+          setTimeout(() => {
+            setSuccess2(false);
+          }, 2000);
+        }
       }
     );
   };
@@ -272,6 +304,14 @@ const Shoe = () => {
               <option value="4">Four stars</option>;
               <option value="5">Five stars</option>;
             </select>
+            {success2 && (
+              <div className="s-r-f-success">Added the review successfully</div>
+            )}
+            <ul className="s-r-f-errors">
+              {reviewErrors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
             <textarea
               className="s-b-ar-review"
               value={newReview}
@@ -280,6 +320,7 @@ const Shoe = () => {
                 setNewReview(e.target.value);
               }}
             ></textarea>
+
             <button type="submit" className="s-b-ar-button">
               Add Review
             </button>
