@@ -1,3 +1,4 @@
+import { getShoesUrl } from "../helpers/storeHelpers";
 const GET_SHOE = "shoe/GET_SHOE";
 const GET_SHOES = "shoe/GET_SHOES";
 const GET_TOP_SHOES = "shoe/GET_TOP_SHOES";
@@ -44,8 +45,8 @@ export const getTheShoe = (id) => async (dispatch) => {
     dispatch(getShoe(data));
   }
 };
-export const getTheShoes = (sort, search) => async (dispatch) => {
-  const response = await fetch(`/api/shoes/${sort}/search/${search}/`, {
+export const getTheShoes = (sort, search, query) => async (dispatch) => {
+  const response = await fetch(getShoesUrl(sort, search, query), {
     headers: {
       "Content-Type": "application/json",
     },

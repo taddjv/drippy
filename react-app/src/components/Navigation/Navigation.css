@@ -4,6 +4,15 @@
   align-items: center;
   background-color: #5b525f;
 }
+.navigation-test {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  border-bottom: 1px solid rgba(91, 82, 95, 0.3);
+  width: 100%;
+  z-index: 1000;
+}
 
 .navigation-left,
 .navigation-center,
@@ -42,7 +51,7 @@
 }
 .n-r-button {
   background: none;
-  border: 1px #5b525f solid;
+  border: 1px rgba(91, 82, 95, 0) solid;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -86,6 +95,7 @@
 }
 .yourCartModal {
   height: 100vh;
+  position: fixed;
 }
 .yc-top {
   height: 80%;

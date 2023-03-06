@@ -1,3 +1,11 @@
+export const getShoesUrl = (sort, search, query) => {
+  let url = `/api/shoes/${sort}/search/${search}/`;
+  if (query?.price) {
+    url = `/api/shoes/${sort}/search/${search}/?price=${query.price}`;
+  }
+  return url;
+};
+
 export const renderStars = (stars, cl) => {
   let finalStars = [];
   for (let i = 0; i < Math.floor(stars); i++) {
@@ -53,6 +61,20 @@ export const storeReviewRender = (obj) => {
   const final = [];
   for (let review in obj) {
     final.push(obj[review]);
+  }
+  return final;
+};
+
+export const renderBrandSlider = (brands) => {
+  const final = [];
+  for (let brand in brands) {
+    final.push(
+      <div className="h-b-slider-brand">
+        {" "}
+        <img src={brands[brand].url} />
+      </div>
+    );
+    // final.push(brands[brand].url);
   }
   return final;
 };

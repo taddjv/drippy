@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 import {
   dataRender,
   cartData,
@@ -8,10 +10,12 @@ import {
 import * as cartActions from "../../store/cart";
 
 const YourCart = ({ checkout, code, state }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer);
   const finalTotal =
     cartData(cart).total + taxCalculator(cartData(cart).total, state);
+  const { showCartModal, setShowCartModal } = useModal();
 
   return (
     <>
@@ -126,7 +130,16 @@ const YourCart = ({ checkout, code, state }) => {
                     </div>
                   </div>
                 </div>
-                <button className="yc-b-bottom">Place Order</button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(cartActions.clearTheCart(cart.id));
+                    history.push("/");
+                  }}
+                  className="yc-b-bottom"
+                >
+                  Place Order
+                </button>
               </>
             ) : (
               <>
@@ -138,7 +151,15 @@ const YourCart = ({ checkout, code, state }) => {
                     <b>${cartData(cart).total} USD</b>
                   </div>
                 </div>
-                <button className="yc-b-bottom">Continue to Checkout</button>
+                <button
+                  onClick={() => {
+                    history.push("/checkout");
+                    setShowCartModal(false);
+                  }}
+                  className="yc-b-bottom"
+                >
+                  Continue to Checkout
+                </button>
               </>
             )}
           </div>

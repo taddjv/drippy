@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
+import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -10,8 +11,9 @@ import YourCart from "./YourCart";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const [showCart, setShowCart] = useState(false);
   const ulRef = useRef();
+
+  const { showCartModal, setShowCartModal } = useModal();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -40,10 +42,12 @@ function ProfileButton({ user }) {
   const closeMenu = () => setShowMenu(false);
   return (
     <>
-      {showCart && (
+      {showCartModal && (
         <>
           <div
-            onClick={() => setShowCart(false)}
+            onClick={() => {
+              setShowCartModal(false);
+            }}
             className="yourCart-background"
           >
             <YourCart checkout={false} />
@@ -53,7 +57,9 @@ function ProfileButton({ user }) {
       {user ? (
         <>
           <i
-            onClick={() => setShowCart(true)}
+            onClick={() => {
+              setShowCartModal(true);
+            }}
             className="fa fa-shopping-cart n-r-link"
             size="m"
           />

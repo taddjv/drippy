@@ -6,15 +6,16 @@
 
 .shoe-container {
   display: flex;
-  border: 2px solid #5b525f;
-  background: white;
+  /* border: 2px solid #5b525f; */
+  gap: 14px;
 }
 
 .shoe-right {
   flex: 2;
   width: 100%;
   padding: 14px;
-  border-left: 2px solid #5b525f;
+  background: white;
+  /* border-left: 2px solid #5b525f; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -114,19 +115,24 @@
 
 .shoe-bottom {
   display: flex;
+  width: 70%;
+  margin: auto;
 }
 
 .shoe-reviews {
   flex: 3;
   background: white;
   width: 100%;
-  border: solid 2px #5b525f;
+  /* border: solid 2px #5b525f; */
+  background: #f0ece4;
+  gap: 14px;
 }
 .shoeReview {
   padding: 14px;
   display: flex;
-  border-bottom: solid 2px rgba(91, 82, 95, 0.1);
+  /* border-bottom: solid 2px rgba(91, 82, 95, 0.1); */
   justify-content: space-between;
+  /* background: #f0ece4; */
 }
 .shoeReview:last-child {
   border: none;
@@ -201,6 +207,7 @@
   display: flex;
   flex-direction: column;
   padding: 14px;
+  /* background: #f0ece4; */
 }
 
 #s-b-ar-stars {
@@ -211,6 +218,7 @@
   border: 1px solid black;
   text-align: center;
   font-size: 14px;
+  background: white;
 }
 
 .s-b-ar-review {
@@ -222,6 +230,7 @@
   border: none;
   font-size: 14px;
   resize: none;
+  background: #f0ece4;
 }
 
 .s-b-ar-button {
@@ -234,6 +243,7 @@
   cursor: pointer;
   font-size: 18px;
   align-self: flex-end;
+  background: white;
 }
 
 .s-b-ar-button:hover {
@@ -247,6 +257,7 @@
   text-decoration: none;
   cursor: pointer;
   margin-right: 8px;
+  background: white;
 }
 .sr-r-b-edit > button:hover {
   background: #5b525f;
@@ -263,14 +274,15 @@
 }
 
 #s-r-s-stars {
-  height: 22px;
+  /* height: 22px; */
   width: 20%;
   font-weight: 500;
   background: none;
   border: 1px solid black;
   text-align: center;
   font-size: 14px;
-  margin: 14px;
+  /* margin: 14px; */
+  background: white;
 }
 .s-r-f-errors {
   margin-bottom: 14px;
@@ -282,4 +294,47 @@
   color: red;
   border: 1px solid red;
   background: lightgrey;
+}
+
+.review-separator {
+  border-bottom: 3px solid;
+  position: relative;
+  margin: 56px auto;
+  /* border: 1px solid red; */
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  max-width: 1440px;
+}
+.review-separator > h1 {
+  /* width: 300px; */
+  position: absolute;
+  bottom: -56px;
+  text-align: center;
+  font-family: "Inspiration", cursive;
+  font-size: 100px;
+  background: white;
+  padding: 0 28px;
+}
+
+.write-review-div {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.write-review {
+  font-weight: 500;
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  align-self: flex-end;
+}
+
+.write-review:hover {
+  background: #5b525f;
+  color: white;
 }

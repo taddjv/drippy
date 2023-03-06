@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
 import YourCart from "../Navigation/YourCart";
 import { optionState } from "../../helpers/storeHelpers";
+import * as cartActions from "../../store/cart";
 import "./Checkout.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

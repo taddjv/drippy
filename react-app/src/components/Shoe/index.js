@@ -8,6 +8,7 @@ import {
   storeReviewRender,
   storeBrandsRender,
 } from "../../helpers/storeHelpers";
+import { useModal } from "../../context/Modal";
 import ShoeReview from "./ShoeReview";
 import * as shoeActions from "../../store/shoe";
 import * as brandActions from "../../store/brand";
@@ -20,6 +21,7 @@ const Shoe = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { setTransNav } = useModal();
 
   const shoe = useSelector((state) => state.shoeReducer);
   const brands = useSelector((state) => state.brandReducer);
@@ -33,6 +35,7 @@ const Shoe = () => {
   const [success, setSuccess] = useState(false);
   const [success2, setSuccess2] = useState(false);
   const [errorClass, setErrorClass] = useState("");
+  const [writeReview, setWriteReview] = useState(false);
 
   const [shoeSize, setShoeSize] = useState("");
   const [editTheShoe, setEditTheShoe] = useState(false);
@@ -57,6 +60,7 @@ const Shoe = () => {
     });
     dispatch(reviewActions.getTheReviews(sortReviews, id));
     dispatch(brandActions.getTheBrands());
+    setTransNav(false);
   }, []);
 
   useEffect(() => {
@@ -153,6 +157,7 @@ const Shoe = () => {
           setTimeout(() => {
             setSuccess2(false);
           }, 2000);
+          setWriteReview(false);
         }
       }
     );
@@ -286,47 +291,14 @@ const Shoe = () => {
           </div>
         </div>
       )}
-      <div className="shoe-bottom">
-        <div className="shoe-reviews">
-          {/* <div className="s-r-header">Comments </div> */}
-          <form onSubmit={addReviewDispatch} className="s-b-addReview">
-            <select
-              id="s-b-ar-stars"
-              value={newStars}
-              onChange={(e) => {
-                setNewStars(e.target.value);
-              }}
-            >
-              <option value="0">Rate here</option>;
-              <option value="1">One star</option>;
-              <option value="2">Two stars</option>;
-              <option value="3">Three stars</option>;
-              <option value="4">Four stars</option>;
-              <option value="5">Five stars</option>;
-            </select>
-            {success2 && (
-              <div className="s-r-f-success">Added the review successfully</div>
-            )}
-            <ul className="s-r-f-errors">
-              {reviewErrors.map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-            </ul>
-            <textarea
-              className="s-b-ar-review"
-              value={newReview}
-              placeholder="Write your review here !"
-              onChange={(e) => {
-                setNewReview(e.target.value);
-              }}
-            ></textarea>
-
-            <button type="submit" className="s-b-ar-button">
-              Add Review
-            </button>
-          </form>
-          <div className="s-r-stars">
-            {" "}
+      <div className="related-shoe">related shoes</div>
+      <div className="review-separator">
+        <h1>Reviews</h1>
+      </div>
+      {!writeReview && (
+        <>
+          {" "}
+          <div className="write-review-div">
             <select
               id="s-r-s-stars"
               value={sortReviews}
@@ -339,23 +311,81 @@ const Shoe = () => {
               <option value="high">Highest Rated</option>;
               <option value="low">Lowest Rated</option>;
             </select>
+            <button
+              onClick={() => {
+                setWriteReview(true);
+              }}
+              className="write-review"
+            >
+              Write a Review
+            </button>
           </div>
+        </>
+      )}
 
-          {renderShoes &&
-            storeReviewRender(reviews).map((ele) => {
-              return (
-                <ShoeReview
-                  user={ele.user}
-                  stars={ele.stars}
-                  dateCreated={ele.dateCreated}
-                  description={ele.description}
-                  id={ele.id}
-                  currentUser={sessionUser}
-                />
-              );
-            })}
+      <div className="shoe-bottom">
+        <div className="shoe-reviews">
+          {/* <div className="s-r-header">Comments </div> */}
+          {writeReview && (
+            <>
+              <form onSubmit={addReviewDispatch} className="s-b-addReview">
+                <select
+                  id="s-b-ar-stars"
+                  value={newStars}
+                  onChange={(e) => {
+                    setNewStars(e.target.value);
+                  }}
+                >
+                  <option value="0">Rate here</option>;
+                  <option value="1">One star</option>;
+                  <option value="2">Two stars</option>;
+                  <option value="3">Three stars</option>;
+                  <option value="4">Four stars</option>;
+                  <option value="5">Five stars</option>;
+                </select>
+                {success2 && (
+                  <div className="s-r-f-success">
+                    Added the review successfully
+                  </div>
+                )}
+                <ul className="s-r-f-errors">
+                  {reviewErrors.map((error, idx) => (
+                    <li key={idx}>{error}</li>
+                  ))}
+                </ul>
+                <textarea
+                  className="s-b-ar-review"
+                  value={newReview}
+                  placeholder="Write your review here !"
+                  onChange={(e) => {
+                    setNewReview(e.target.value);
+                  }}
+                ></textarea>
+
+                <button type="submit" className="s-b-ar-button">
+                  Add Review
+                </button>
+              </form>
+            </>
+          )}
+
+          <div>
+            {" "}
+            {renderShoes &&
+              storeReviewRender(reviews).map((ele) => {
+                return (
+                  <ShoeReview
+                    user={ele.user}
+                    stars={ele.stars}
+                    dateCreated={ele.dateCreated}
+                    description={ele.description}
+                    id={ele.id}
+                    currentUser={sessionUser}
+                  />
+                );
+              })}
+          </div>
         </div>
-        <div className="related-shoe"></div>
       </div>
     </div>
   );

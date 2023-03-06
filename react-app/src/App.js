@@ -9,10 +9,13 @@ import Shop from "./components/Shop";
 import { ShopShoe } from "./components/Shop/ShopShoe";
 import Shoe from "./components/Shoe";
 import Checkout from "./components/Checkout";
+import Test from "./components/test";
+import { useModal } from "./context/Modal";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const { transNav } = useModal();
   useEffect(() => {
     dispatch(authenticate()).then(async (res) => {
       if (await res) {
@@ -25,7 +28,7 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} trans={transNav} />
       <Switch>
         <Route path="/shoes/:id">
           <Shoe />
@@ -37,7 +40,7 @@ function App() {
           <Shop />
         </Route>
         <Route path="/test">
-          <ShopShoe />
+          <Test />
         </Route>
         <Route path="/">
           <Home />

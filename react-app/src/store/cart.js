@@ -155,6 +155,12 @@ export default function cartReducer(state = initialState, action) {
       delete newState[itemIndex];
       return newState;
     }
+    case CLEAR_CART: {
+      let newState = { ...state };
+      newState = {};
+
+      return newState;
+    }
     default:
       return state;
   }
