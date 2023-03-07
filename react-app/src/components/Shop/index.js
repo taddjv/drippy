@@ -28,6 +28,7 @@ const Shop = () => {
   const [color, setColor] = useState(null);
   const [year, setYear] = useState(null);
   const [size, setSize] = useState(null);
+  console.log(color);
 
   const getShoes = (e) => {
     e.preventDefault();
@@ -50,34 +51,24 @@ const Shop = () => {
     if (!searchQuery) {
       search = "all";
     }
+    const queryData = {};
     if (minPrice && maxPrice) {
-      const data = { price: [minPrice, maxPrice] };
-      dispatch(shoeActions.getTheShoes(sortQuery, search, data)).then(
-        async (res) => {
-          const data = await res;
-          if (data.shoes.length) {
-            setRenderShoes(true);
-          }
-        }
-      );
-    } else if (color) {
-      const data = { color: color };
-      dispatch(shoeActions.getTheShoes(sortQuery, search, data)).then(
-        async (res) => {
-          const data = await res;
-          if (data.shoes.length) {
-            setRenderShoes(true);
-          }
-        }
-      );
-    } else {
-      dispatch(shoeActions.getTheShoes(sortQuery, search)).then(async (res) => {
+      queryData["price"] = [minPrice, maxPrice];
+    }
+    if (color) {
+      queryData["color"] = color;
+    }
+    if (year) {
+      queryData["year"] = year;
+    }
+    dispatch(shoeActions.getTheShoes(sortQuery, search, queryData)).then(
+      async (res) => {
         const data = await res;
         if (data.shoes.length) {
           setRenderShoes(true);
         }
-      });
-    }
+      }
+    );
     setApplyFilter(false);
     setTransNav(false);
   }, [sortQuery, applyFilter]);
@@ -86,7 +77,7 @@ const Shop = () => {
   return (
     <div className="shop">
       <div className="shop-sidebar">
-        <div className="s-s-title">Filter</div>
+        <div className="s-s-title">FILTER</div>
         <div className="s-s-container">
           <div className="s-s-c-price" onClick={() => setShowPrice(!showPrice)}>
             PRICE
@@ -96,11 +87,13 @@ const Shop = () => {
                   onChange={(e) => setMaxPrice(e.target.value)}
                   type="number"
                   placeholder="MAX PRICE"
+                  value={maxPrice}
                 />
                 <input
                   onChange={(e) => setMinPrice(e.target.value)}
                   type="number"
                   placeholder="MIN PRICE"
+                  value={minPrice}
                 />
               </div>
             )}
@@ -108,28 +101,165 @@ const Shop = () => {
           <div className="s-s-c-color" onClick={() => setShowColor(!showColor)}>
             COLOR <br />
             {showColor && (
-              <select onClick={(e) => e.stopPropagation()}>
-                <option>Choose Color</option>
-                <option>Black</option>
-                <option>White</option>
-                <option>Red</option>
-                <option>Orange</option>
-                <option>Yellow</option>
-                <option>Green</option>
-                <option>Blue</option>
-                <option>Purple</option>
-                <option>Brown</option>
-                <option>Beige</option>
-              </select>
+              <>
+                {" "}
+                <div className="s-s-c-c" onClick={(e) => e.stopPropagation()}>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="black"
+                    id="shoe.black"
+                    checked={color === "black"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "black" ? "shoe-color-edit" : null
+                    } shoe-black`}
+                    for="shoe.black"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="white"
+                    id="shoe.white"
+                    checked={color === "white"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "white" ? "shoe-color-edit" : null
+                    } shoe-white`}
+                    for="shoe.white"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="red"
+                    id="shoe.red"
+                    checked={color === "red"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "red" ? "shoe-color-edit" : null
+                    } shoe-red`}
+                    for="shoe.red"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="orange"
+                    id="shoe.orange"
+                    checked={color === "orange"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "orange" ? "shoe-color-edit" : null
+                    } shoe-orange`}
+                    for="shoe.orange"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="yellow"
+                    id="shoe.yellow"
+                    checked={color === "yellow"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "yellow" ? "shoe-color-edit" : null
+                    } shoe-yellow`}
+                    for="shoe.yellow"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="green"
+                    id="shoe.green"
+                    checked={color === "green"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "green" ? "shoe-color-edit" : null
+                    } shoe-green`}
+                    for="shoe.green"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="blue"
+                    id="shoe.blue"
+                    checked={color === "blue"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "blue" ? "shoe-color-edit" : null
+                    } shoe-blue`}
+                    for="shoe.blue"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="purple"
+                    id="shoe.purple"
+                    checked={color === "purple"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "purple" ? "shoe-color-edit" : null
+                    } shoe-purple`}
+                    for="shoe.purple"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="brown"
+                    id="shoe.brown"
+                    checked={color === "brown"}
+                  ></input>
+                  <label
+                    className={`${
+                      color === "brown" ? "shoe-color-edit" : null
+                    } shoe-brown`}
+                    for="shoe.brown"
+                  ></label>
+                  <input
+                    type="radio"
+                    onChange={(e) => setColor(e.target.value)}
+                    name="shoe-color-radio"
+                    value="beige"
+                    id="shoe.beige"
+                    checked={color === "beige"}
+                  ></input>
+                  <label
+                    className={` shoe-beige ${
+                      color === "beige" ? "shoe-color-edit" : null
+                    }`}
+                    for="shoe.beige"
+                  ></label>
+                </div>
+              </>
             )}
           </div>
-          <div onClick={() => setShowYear(!showYear)} className="s-s-c-year">
+          <div
+            value={year}
+            onClick={() => setShowYear(!showYear)}
+            className="s-s-c-year"
+          >
             RELEASE YEAR
             {showYear && (
               <input
                 onClick={(e) => e.stopPropagation()}
+                onChange={(e) => setYear(e.target.value)}
                 type="number"
-                placeholder="RELEASE YEAR"
+                placeholder="YEAR"
               ></input>
             )}
           </div>
@@ -137,27 +267,32 @@ const Shop = () => {
             SIZE
             <br />
             {showSize && (
-              <select onClick={(e) => e.stopPropagation()}>
-                <option>Select Size</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-              </select>
+              <>
+                {" "}
+                <select onClick={(e) => e.stopPropagation()}>
+                  <option>Select Size</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                  <option>12</option>
+                </select>
+                ***
+              </>
             )}
           </div>
           <button
+            className="s-s-c-button"
             onClick={(e) => {
               e.preventDefault();
               setApplyFilter(true);
             }}
           >
-            apply filter
+            APPLY FILTERS
           </button>
         </div>
       </div>

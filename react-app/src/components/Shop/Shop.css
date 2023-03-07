@@ -9,7 +9,7 @@
   height: 100vh;
   background: white;
   margin-right: 48px;
-  border: 1px solid black;
+  margin-top: 72px;
 }
 
 .shop-container {
@@ -90,4 +90,101 @@
 .shop-container-nothing {
   width: 1082px;
   margin: 24px 0;
+}
+.s-s-title {
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+.s-s-c-price,
+.s-s-c-color,
+.s-s-c-year,
+.s-s-c-size {
+  border-bottom: 2px solid #5b525f;
+  padding: 8px 18px;
+}
+
+.s-s-c-p > input {
+  height: 28px;
+  width: 102px;
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  /* margin-bottom: 14px; */
+  border: 2px solid #5b525f;
+  padding-left: 8px;
+  font-size: 14px;
+}
+.s-s-c-c {
+  display: flex;
+  flex-wrap: wrap;
+}
+.s-s-c-c > label {
+  height: 28px;
+  width: 28px;
+  border: 2px solid rgba(91, 82, 95, 0.3);
+  margin: 8px;
+}
+.s-s-c-c > input {
+  display: none;
+}
+
+.shoe-color-edit {
+  padding: 14px;
+}
+.shoe-black {
+  background: black;
+}
+.shoe-white {
+  background: white;
+}
+.shoe-red {
+  background: red;
+}
+.shoe-orange {
+  background: orange;
+}
+.shoe-yellow {
+  background: yellow;
+}
+.shoe-green {
+  background: green;
+}
+.shoe-blue {
+  background: blue;
+}
+.shoe-purple {
+  background: purple;
+}
+.shoe-brown {
+  background: brown;
+}
+.shoe-beige {
+  background: beige;
+}
+
+.s-s-c-year > input {
+  height: 28px;
+  width: 102px;
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  /* margin-bottom: 14px; */
+  border: 2px solid #5b525f;
+
+  font-size: 14px;
+  text-align: center;
+}
+
+.s-s-c-button {
+  width: 100%;
+  height: 36px;
+  background: none;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 28px 0;
+}
+.s-s-c-button:hover {
+  background-color: #efeeef;
 }

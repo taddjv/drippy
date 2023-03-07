@@ -1,9 +1,18 @@
 export const getShoesUrl = (sort, search, query) => {
+  const final = [];
+
   let url = `/api/shoes/${sort}/search/${search}/`;
   if (query?.price) {
-    url = `/api/shoes/${sort}/search/${search}/?price=${query.price}`;
+    final.push(`price=${query.price}`);
   }
-  return url;
+  if (query?.color) {
+    final.push(`color=${query.color}`);
+  }
+  if (query?.year) {
+    final.push(`year=${query.year}`);
+  }
+
+  return url + "?" + final.join("&");
 };
 
 export const renderStars = (stars, cl) => {
