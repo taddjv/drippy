@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useModal } from "../../context/Modal";
@@ -10,6 +10,7 @@ import YourCart from "./YourCart";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -35,7 +36,15 @@ function ProfileButton({ user }) {
   }, [showMenu]);
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+
+    dispatch(logout()).then(() => {
+      if (history.location.pathname === "/myaccount") {
+        history.push("/");
+      }
+      if (history.location.pathname === "/checkout") {
+        history.push("/");
+      }
+    });
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -77,6 +86,13 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
+            <button className="n-r-b-button">
+              {" "}
+              <NavLink className=" n-r-b-link" exact to="/myaccount">
+                My Account
+              </NavLink>
+            </button>
+
             <button className="n-r-b-button" onClick={handleLogout}>
               Log Out
             </button>

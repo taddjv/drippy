@@ -183,7 +183,10 @@
   text-decoration: none;
   cursor: pointer;
   font-size: 18px;
-  margin: 28px 0;
+  margin-bottom: 8px;
+}
+.s-s-c-button:first-of-type {
+  margin-top: 28px;
 }
 .s-s-c-button:hover {
   background-color: #efeeef;

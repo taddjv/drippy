@@ -48,7 +48,7 @@
 .s-r-d-l-name {
   font-weight: 500;
   margin: 14px 0;
-  height: 23px;
+  /* height: 23px; */
   width: 300px;
 }
 .s-r-d-l-name-edit {
@@ -124,7 +124,7 @@
   background: white;
   width: 100%;
   /* border: solid 2px #5b525f; */
-  background: #f0ece4;
+  background-color: #efeeef;
   gap: 14px;
 }
 .shoeReview {
@@ -174,7 +174,7 @@
 }
 
 .s-r-d-l-name {
-  height: 23px;
+  /* height: 23px; */
   width: 300px;
 }
 .s-r-d-l-name-edit {

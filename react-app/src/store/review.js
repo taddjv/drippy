@@ -129,17 +129,10 @@ export default function reviewReducer(state = initialState, action) {
       let reviewIndex = Object.keys(newState).find(
         (key) => newState[key]["id"] === action.id
       );
-      newState[reviewIndex]["stars"] = action.payload.stars;
-      newState[reviewIndex]["description"] = action.payload.description;
-      return newState;
-    }
-    case PUT_REVIEW: {
-      let newState = { ...state };
-      let reviewIndex = Object.keys(newState).find(
-        (key) => newState[key]["id"] === action.id
-      );
-      newState[reviewIndex]["stars"] = action.payload.stars;
-      newState[reviewIndex]["description"] = action.payload.description;
+      newState[reviewIndex]["stars"] =
+        action.payload.stars || newState[reviewIndex]["stars"];
+      newState[reviewIndex]["description"] =
+        action.payload.description || newState[reviewIndex]["description"];
       return newState;
     }
     case DELETE_REVIEW: {

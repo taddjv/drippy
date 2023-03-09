@@ -8,14 +8,56 @@ import {
   taxCalculator,
 } from "../../helpers/storeHelpers";
 import * as cartActions from "../../store/cart";
+import * as sessionActions from "../../store/session";
 
-const YourCart = ({ checkout, code, state }) => {
+const YourCart = ({
+  checkout,
+  code,
+  state,
+  showButton,
+  payType,
+  credit,
+  user,
+}) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer);
   const finalTotal =
     cartData(cart).total + taxCalculator(cartData(cart).total, state);
   const { showCartModal, setShowCartModal } = useModal();
+
+  const [errors, setErrors] = useState([]);
+
+  const placeOrder = (e) => {
+    e.preventDefault();
+    const data = {
+      username: user.username,
+      email: user.email,
+      contact_info: user.contact_info,
+      address: user.address,
+      card: user.card,
+      credit: user.credit - finalTotal,
+    };
+    if (payType === "creditCard") {
+      dispatch(cartActions.clearTheCart(cart.id)).then(() => {
+        history.push("/");
+      });
+    }
+    if (payType === "credit") {
+      if (finalTotal <= user.credit) {
+        dispatch(cartActions.clearTheCart(cart.id)).then(() => {
+          dispatch(sessionActions.editTheUser(data, user.id));
+          history.push("/");
+          setErrors([]);
+        });
+      } else {
+        setErrors(["You do not enough credit"]);
+        setTimeout(() => {
+          setErrors([]);
+        }, 2000);
+      }
+    }
+  };
 
   return (
     <>
@@ -27,7 +69,16 @@ const YourCart = ({ checkout, code, state }) => {
           }`}
         >
           <div className={`${checkout ? "yc-top-checkout" : "yc-top"}`}>
-            <h1 className="yc-title">Your Cart</h1>
+            <h1 className={checkout ? "c-l-s-title" : "yc-title"}>
+              {checkout ? "CART ITEMS" : "Your Cart"}
+            </h1>
+            <ul className={"mp-alert"}>
+              {errors.map((error, idx) => (
+                <li className={"mp-error"} key={idx}>
+                  {error}
+                </li>
+              ))}
+            </ul>
             {dataRender(cart).map((ele) => (
               <div className="yc-cartItem">
                 <div className="yc-ci-left">
@@ -130,16 +181,23 @@ const YourCart = ({ checkout, code, state }) => {
                     </div>
                   </div>
                 </div>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(cartActions.clearTheCart(cart.id));
-                    history.push("/");
-                  }}
-                  className="yc-b-bottom"
-                >
-                  Place Order
-                </button>
+                {/* {showButton && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(cartActions.clearTheCart(cart.id));
+                      history.push("/");
+                    }}
+                    className="yc-b-bottom"
+                  >
+                    Place Order
+                  </button>
+                )} */}
+                {showButton && (
+                  <button onClick={placeOrder} className="yc-b-bottom">
+                    Place Order
+                  </button>
+                )}
               </>
             ) : (
               <>

@@ -126,7 +126,7 @@ const initialState = {};
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART: {
-      let newState = { ...state };
+      let newState = {};
       newState["id"] = action.payload.id;
       action.payload.cart_items.forEach((ele) => {
         newState[ele.id] = ele;

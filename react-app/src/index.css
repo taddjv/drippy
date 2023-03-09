@@ -18,7 +18,7 @@
   /* background: #f0ece4; */
   overflow: scroll;
 }
-#root::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
 

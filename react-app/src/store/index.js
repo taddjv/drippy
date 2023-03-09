@@ -5,6 +5,7 @@ import shoeReducer from "./shoe";
 import brandReducer from "./brand";
 import reviewReducer from "./review";
 import cartReducer from "./cart";
+import tempShoeReducer from "./tempShoe";
 
 const rootReducer = combineReducers({
   session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   brandReducer,
   reviewReducer,
   cartReducer,
+  tempShoeReducer,
 });
 
 let enhancer;

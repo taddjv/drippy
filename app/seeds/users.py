@@ -9,7 +9,7 @@ def object_as_dict(obj):
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
+        username='Demo', email='demo@aa.io', password='password',contact_info="Demo,User,1234567890",address="1600 Pennsylvania Avenue NW,Washington,D.C.,United States,20500,*",card="5123456789019999,02/28,123")
     marnie = User(
         username='marnie', email='marnie@aa.io', password='password')
     bobbie = User(

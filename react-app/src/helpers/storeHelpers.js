@@ -88,6 +88,17 @@ export const renderBrandSlider = (brands) => {
   return final;
 };
 
+export const reviewDataCalc = (reviews) => {
+  let count = 0;
+  let total = 0;
+
+  for (let review in reviews) {
+    count++;
+    total += reviews[review].stars;
+  }
+  return { count: count, total: total / count };
+};
+
 export const capFirstLetter = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
@@ -299,6 +310,45 @@ export const taxCalculator = (price, state) => {
     case "Wyoming":
       tax = 5.33;
       break;
+    case "Alberta":
+      tax = 5;
+      break;
+    case "British Columbia":
+      tax = 12;
+      break;
+    case "Manitoba":
+      tax = 12;
+      break;
+    case "New Brunswick":
+      tax = 15;
+      break;
+    case "Newfoundland and Labrador":
+      tax = 15;
+      break;
+    case "Northwest Territories":
+      tax = 5;
+      break;
+    case "Nova Scotia":
+      tax = 15;
+      break;
+    case "Nunavut":
+      tax = 5;
+      break;
+    case "Ontario":
+      tax = 13;
+      break;
+    case "Prince Edward Island":
+      tax = 14.975;
+      break;
+    case "Quebec":
+      tax = 11;
+      break;
+    case "Saskatchewan":
+      tax = 5;
+      break;
+    case "Yukon":
+      tax = 5;
+      break;
     default:
       tax = 0;
   }
@@ -307,57 +357,171 @@ export const taxCalculator = (price, state) => {
   return final;
 };
 
-export const optionState = () => {
-  return (
-    <>
-      <option value={null}></option>
-      <option value="Alabama">Alabama</option>
-      <option value="Alaska">Alaska</option>
-      <option value="Arizona">Arizona</option>
-      <option value="Arkansas">Arkansas</option>
-      <option value="California">California</option>
-      <option value="Colorado">Colorado</option>
-      <option value="Connecticut">Connecticut</option>
-      <option value="Delaware">Delaware</option>
-      <option value="D.C.">D.C.</option>
-      <option value="Florida">Florida</option>
-      <option value="Georgia">Georgia</option>
-      <option value="Hawaii">Hawaii</option>
-      <option value="Idaho">Idaho</option>
-      <option value="Oregon">Oregon</option>
-      <option value="Illinois">Illinois</option>
-      <option value="Indiana">Indiana</option>
-      <option value="Iowa">Iowa</option>
-      <option value="Kansas">Kansas</option>
-      <option value="Kentucky">Kentucky</option>
-      <option value="New York">New York</option>
-      <option value="Louisiana">Louisiana</option>
-      <option value="New Mexico">New Mexico</option>
-      <option value="Maine">Maine</option>
-      <option value="New Jersey">New Jersey</option>
-      <option value="Maryland">Maryland</option>
-      <option value="New Hampshire">New Hampshire</option>
-      <option value="Massachusetts">Massachusetts</option>
-      <option value="Nevada">Nevada</option>
-      <option value="Michigan">Michigan</option>
-      <option value="Nebraska">Nebraska</option>
-      <option value="Minnesota">Minnesota</option>
-      <option value="Montana">Montana</option>
-      <option value="Mississippi">Mississippi</option>
-      <option value="Missouri">Missouri</option>
-      <option value="North Carolina">North Carolina</option>
-      <option value="North Dakota">North Dakota</option>
-      <option value="Ohio">Ohio</option>
-      <option value="Oklahoma">Oklahoma</option>
-      <option value="Pennsylvania">Pennsylvania</option>
-      <option value="Rhode Island">Rhode IslandRhode Island</option>
-      <option value="South Carolina">South Carolina</option>
-      <option value="South Dakota">South Dakota</option>
-      <option value="Texas">Texas</option>
-      <option value="Utah">Utah</option>
-      <option value="Vermont">Vermont</option>
-      <option value="Virginia">Virginia</option>
-      <option value="Washington">Washington</option>
-    </>
-  );
+export const optionState = (country) => {
+  if (country === "United States") {
+    return (
+      <>
+        <option value={null}></option>
+        <option value="Alabama">Alabama</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Arizona">Arizona</option>
+        <option value="Arkansas">Arkansas</option>
+        <option value="California">California</option>
+        <option value="Colorado">Colorado</option>
+        <option value="Connecticut">Connecticut</option>
+        <option value="Delaware">Delaware</option>
+        <option value="D.C.">D.C.</option>
+        <option value="Florida">Florida</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Hawaii">Hawaii</option>
+        <option value="Idaho">Idaho</option>
+        <option value="Oregon">Oregon</option>
+        <option value="Illinois">Illinois</option>
+        <option value="Indiana">Indiana</option>
+        <option value="Iowa">Iowa</option>
+        <option value="Kansas">Kansas</option>
+        <option value="Kentucky">Kentucky</option>
+        <option value="New York">New York</option>
+        <option value="Louisiana">Louisiana</option>
+        <option value="New Mexico">New Mexico</option>
+        <option value="Maine">Maine</option>
+        <option value="New Jersey">New Jersey</option>
+        <option value="Maryland">Maryland</option>
+        <option value="New Hampshire">New Hampshire</option>
+        <option value="Massachusetts">Massachusetts</option>
+        <option value="Nevada">Nevada</option>
+        <option value="Michigan">Michigan</option>
+        <option value="Nebraska">Nebraska</option>
+        <option value="Minnesota">Minnesota</option>
+        <option value="Montana">Montana</option>
+        <option value="Mississippi">Mississippi</option>
+        <option value="Missouri">Missouri</option>
+        <option value="North Carolina">North Carolina</option>
+        <option value="North Dakota">North Dakota</option>
+        <option value="Ohio">Ohio</option>
+        <option value="Oklahoma">Oklahoma</option>
+        <option value="Pennsylvania">Pennsylvania</option>
+        <option value="Rhode Island">Rhode IslandRhode Island</option>
+        <option value="South Carolina">South Carolina</option>
+        <option value="South Dakota">South Dakota</option>
+        <option value="Texas">Texas</option>
+        <option value="Utah">Utah</option>
+        <option value="Vermont">Vermont</option>
+        <option value="Virginia">Virginia</option>
+        <option value="Washington">Washington</option>
+      </>
+    );
+  }
+  if (country === "Canada") {
+    return (
+      <>
+        <option value={null}></option>
+        <option value="Alberta">Alberta</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="Newfoundland and Labrador">
+          Newfoundland and Labrador
+        </option>
+        <option value="Northwest Territories">Northwest Territories</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Nunavut">Nunavut</option>
+        <option value="Ontario">Ontario</option>
+        <option value="Prince Edward Island">Prince Edward Island</option>
+        <option value="Quebec">Quebec</option>
+      </>
+    );
+  }
+};
+
+export const similarShoesCalc = (shoesObj, goodShoe, selectedShoes = []) => {
+  const shoes = [];
+
+  console.log(shoesObj);
+  console.log(goodShoe);
+};
+
+export const cardErrors = (number, date, security) => {
+  if (number) {
+    if (number.length !== 16) {
+      return ["Not a valid credit card"];
+    }
+    if (!["4", "2", "3", "5"].includes(number[0])) {
+      return ["Credit card numbers start with 3, 2, 5 or 4"];
+    }
+  }
+  if (date) {
+    if (`${date}`.length !== 4) {
+      return ["Not a valid date"];
+    }
+    if (
+      Number(`${date}`.slice(0, 2)) < 1 ||
+      Number(`${date}`.slice(0, 2)) > 12
+    ) {
+      return ["Not a valid date"];
+    }
+    if (Number(`${date}`.slice(2)) < 1 || Number(`${date}`.slice(2)) > 31) {
+      return ["Not a valid date"];
+    }
+  }
+  if (security) {
+    if (`${security}`.length !== 3) {
+      return ["Not a valid CVV"];
+    }
+    if (security < 1) {
+      return ["Not a valid CVV"];
+    }
+  }
+};
+
+export const shippingErrors = (
+  name,
+  country,
+  street,
+  city,
+  state,
+  post,
+  phone
+) => {
+  if (name.includes("*")) {
+    return ["Please add a name"];
+  }
+  if (name.split(" ").length < 2) {
+    return ["Not a valid name"];
+  }
+  if (country.includes("*")) {
+    return ["Please add a country"];
+  }
+  if (street.includes("*")) {
+    return ["Please add a street"];
+  }
+  if (street.split(" ")[0] != Number(street.split(" ")[0])) {
+    return ["Not a valid street"];
+  }
+  if (city.includes("*")) {
+    return ["Please add a city"];
+  }
+  if (state.includes("*")) {
+    return ["Please add a state"];
+  }
+  if (post.includes("*")) {
+    return ["Please add a postal code"];
+  }
+  if (country === "United States") {
+    if (post.length !== 5) {
+      return ["Not a valid postal code"];
+    }
+    if (post != Number(post)) {
+      return ["Not a valid postal code"];
+    }
+  }
+  if (phone.includes("*")) {
+    return ["Please add a phone number"];
+  }
+  if (phone.length !== 10) {
+    return ["Not a valid phone number"];
+  }
+  if (phone != Number(phone)) {
+    return ["Not a valid phone number"];
+  }
 };

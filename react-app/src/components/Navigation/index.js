@@ -22,9 +22,7 @@ function Navigation({ isLoaded, trans }) {
         <NavLink exact to="/shop">
           Shop
         </NavLink>
-        <NavLink exact to="/brands">
-          Brands
-        </NavLink>
+        <span className="n-c-brands">Brands</span>
       </div>
       <div className="navigation-right">
         {isLoaded && <ProfileButton user={sessionUser} />}

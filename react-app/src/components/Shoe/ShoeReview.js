@@ -22,9 +22,10 @@ const ShoeReview = ({
   const dispatchEditReview = (e) => {
     e.preventDefault();
     const reviewData = {
-      description: newDescription || description,
+      description: newDescription,
       stars: newStars || stars,
     };
+
     dispatch(reviewsActions.putTheReview(reviewData, id)).then(async (res) => {
       const data = await res;
 

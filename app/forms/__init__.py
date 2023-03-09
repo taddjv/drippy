@@ -4,3 +4,4 @@ from .brand_form import BrandForm
 from .review_form import ReviewForm
 from .shoe_form import ShoeForm
 from .cart_item_form import CartItemForm
+from .user_form import UserForm

@@ -7,6 +7,8 @@ import {
   renderShoeSize,
   storeReviewRender,
   storeBrandsRender,
+  reviewDataCalc,
+  similarShoesCalc,
 } from "../../helpers/storeHelpers";
 import { useModal } from "../../context/Modal";
 import ShoeReview from "./ShoeReview";
@@ -14,6 +16,7 @@ import * as shoeActions from "../../store/shoe";
 import * as brandActions from "../../store/brand";
 import * as reviewActions from "../../store/review";
 import * as cartActions from "../../store/cart";
+import * as tempActions from "../../store/tempShoe";
 import { authenticate } from "../../store/session";
 import "./Shoe.css";
 
@@ -28,7 +31,7 @@ const Shoe = () => {
   const reviews = useSelector((state) => state.reviewReducer);
   const sessionUser = useSelector((state) => state.session.user);
   const cart = useSelector((state) => state.cartReducer);
-
+  const similarShoes = useSelector((state) => state.tempShoeReducer);
   const [renderShoes, setRenderShoes] = useState(false);
   const [errors, setErrors] = useState([]);
   const [reviewErrors, setReviewErrors] = useState([]);
@@ -60,6 +63,7 @@ const Shoe = () => {
     });
     dispatch(reviewActions.getTheReviews(sortReviews, id));
     dispatch(brandActions.getTheBrands());
+    dispatch(tempActions.getTheShoes());
     setTransNav(false);
   }, []);
 
@@ -86,7 +90,9 @@ const Shoe = () => {
     };
 
     if (shoeSize) {
-      dispatch(cartActions.postTheCartItem(data, cart.id))
+      dispatch(
+        cartActions.postTheCartItem(data, cart.id || sessionUser.cart.id)
+      )
         .then(async (res) => {
           const data = await res;
           if (!sessionUser) {
@@ -188,8 +194,8 @@ const Shoe = () => {
                     </h3>
                     <h3 className="s-r-d-l-name">{shoe.name}</h3>
                     <h3 className="s-r-d-l-reviews">
-                      {renderStars(shoe.reviews.total_stars)} With{" "}
-                      {shoe.review_count} Reviews
+                      {renderStars(reviewDataCalc(reviews).total)} With{" "}
+                      {reviewDataCalc(reviews).count} Reviews
                     </h3>
                   </div>
                   <div className="s-r-d-right">
@@ -325,7 +331,6 @@ const Shoe = () => {
 
       <div className="shoe-bottom">
         <div className="shoe-reviews">
-          {/* <div className="s-r-header">Comments </div> */}
           {writeReview && (
             <>
               <form onSubmit={addReviewDispatch} className="s-b-addReview">

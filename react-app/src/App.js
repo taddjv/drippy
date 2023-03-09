@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import * as cartActions from "./store/cart";
@@ -10,12 +10,20 @@ import { ShopShoe } from "./components/Shop/ShopShoe";
 import Shoe from "./components/Shoe";
 import Checkout from "./components/Checkout";
 import Test from "./components/test";
+import MyAccount from "./components/MyAccount";
 import { useModal } from "./context/Modal";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const { transNav } = useModal();
+
+  const currentUser = useSelector((state) => state.session);
+  useEffect(() => {
+    if (currentUser.user)
+      dispatch(cartActions.getTheCart(currentUser.user.cart.id));
+  }, [currentUser]);
+
   useEffect(() => {
     dispatch(authenticate()).then(async (res) => {
       if (await res) {
@@ -24,7 +32,7 @@ function App() {
 
       setIsLoaded(true);
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -35,6 +43,9 @@ function App() {
         </Route>
         <Route path="/checkout">
           <Checkout />
+        </Route>
+        <Route path="/myaccount">
+          <MyAccount />
         </Route>
         <Route path="/shop">
           <Shop />

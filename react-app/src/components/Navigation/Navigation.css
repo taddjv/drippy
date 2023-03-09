@@ -81,6 +81,9 @@
 .n-r-b-button:hover {
   background-color: #efeeef;
 }
+.n-r-b-link {
+  height: 50px;
+}
 
 .hidden {
   display: none;
@@ -214,4 +217,13 @@
 
 .yc-b-t-right-promo {
   color: green;
+}
+
+.n-c-brands {
+  margin: 0 20px;
+  color: white;
+  cursor: pointer;
+}
+.n-c-brands:hover {
+  border-bottom: 1px solid white;
 }

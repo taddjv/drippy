@@ -49,7 +49,11 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        final_user = object_as_dict(user)
+        del final_user["hashed_password"]
+        final_user["cart"] = object_as_dict(current_user.cart[0])
+
+        return final_user
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

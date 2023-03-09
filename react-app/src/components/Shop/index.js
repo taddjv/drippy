@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as shoeActions from "../../store/shoe";
+
 import { ShopShoe } from "./ShopShoe";
 import { storeShoesRender } from "../../helpers/storeHelpers";
 import ShopFilter from "./ShopFilter";
@@ -28,7 +29,6 @@ const Shop = () => {
   const [color, setColor] = useState(null);
   const [year, setYear] = useState(null);
   const [size, setSize] = useState(null);
-  console.log(color);
 
   const getShoes = (e) => {
     e.preventDefault();
@@ -293,6 +293,19 @@ const Shop = () => {
             }}
           >
             APPLY FILTERS
+          </button>
+          <button
+            className="s-s-c-button"
+            onClick={(e) => {
+              e.preventDefault();
+              setMinPrice(null);
+              setMaxPrice(null);
+              setColor(null);
+              setYear(null);
+              setApplyFilter(true);
+            }}
+          >
+            CLEAR FILTERS
           </button>
         </div>
       </div>

@@ -86,17 +86,9 @@ def post_shoe():
         return object_as_dict(shoe)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-@shoe_routes.route("/<string:sort>", methods=["GET"])
-def get_all_shoes(sort):
-    shoes = None
-    if sort == "default":
-        shoes = db.session.query(Shoe).all()
-    if sort == "reviews":
-        shoes = db.session.query(Shoe).order_by(Shoe.review_count.desc())
-    if sort == "expensive":
-        shoes = db.session.query(Shoe).order_by(Shoe.price.desc())
-    if sort == "cheapest":
-        shoes = db.session.query(Shoe).order_by(Shoe.price)
+@shoe_routes.route("/", methods=["GET"])
+def get_all_shoes():
+    shoes = db.session.query(Shoe).all()
     final = {"shoes":[]}
     for shoe in shoes:
         final_shoe = object_as_dict(shoe)
@@ -106,22 +98,44 @@ def get_all_shoes(sort):
 
 @shoe_routes.route("<string:sort>/search/<string:search>/", methods=["GET"])
 def search_all_shoes(sort,search):
-    shoes = None
     searchQuery = None
     if (search == "all"):
         searchQuery = ""
     else:
         searchQuery = search
+    price_args = request.args.get("price")
+    color_args = request.args.get("color")
+    year_args = request.args.get("year")
 
-    #! order by newwest should be the default
-    if sort == "default":
-        shoes = db.session.query(Shoe).filter(Shoe.name.contains((searchQuery)))
+    search_query = Shoe.name.contains((searchQuery))
+    order_query = None
+
     if sort == "reviews":
-        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.review_count.desc())
+        order_query = Shoe.review_count.desc()
     if sort == "expensive":
-        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.price.desc())
+        order_query = Shoe.price.desc()
     if sort == "cheapest":
-        shoes = db.session.query(Shoe).filter(Shoe.name.contains(searchQuery)).order_by(Shoe.price)
+        order_query = Shoe.price
+
+    shoes = db.session.query(Shoe).filter(search_query).order_by(order_query)
+
+    if price_args:
+        shoes = shoes.filter(Shoe.price.between(price_args.split(",")[0],price_args.split(",")[1]))
+    if color_args:
+        shoes = shoes.filter(Shoe.colors.contains(color_args))
+    if year_args:
+        shoes = shoes.filter(Shoe.year == (year_args))
+
+    # shoes = db.session.query(Shoe).filter(search_query,filter_query).order_by(order_query)
+    # print(color_args.split(",")[0],"============================")
+
+
+    # if filter_query:
+    # else:
+    #     shoes = db.session.query(Shoe).filter(search_query).order_by(order_query)
+
+
+
     final = {"shoes":[]}
     for shoe in shoes:
         final_shoe = object_as_dict(shoe)
