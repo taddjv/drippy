@@ -210,7 +210,7 @@ const Shoe = () => {
                               e.preventDefault();
                               dispatch(reviewActions.deleteTheReview(id)).then(
                                 () => {
-                                  console.log("coooo");
+                                  // console.log("coooo");
                                 }
                               );
                             }}

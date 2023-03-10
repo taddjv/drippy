@@ -437,8 +437,8 @@ export const optionState = (country) => {
 export const similarShoesCalc = (shoesObj, goodShoe, selectedShoes = []) => {
   const shoes = [];
 
-  console.log(shoesObj);
-  console.log(goodShoe);
+  // console.log(shoesObj);
+  // console.log(goodShoe);
 };
 
 export const cardErrors = (number, date, security) => {
