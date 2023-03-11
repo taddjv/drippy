@@ -6,7 +6,7 @@ import * as shoeActions from "../../store/shoe";
 
 import { ShopShoe } from "./ShopShoe";
 import { storeShoesRender } from "../../helpers/storeHelpers";
-import ShopFilter from "./ShopFilter";
+
 import "./Shop.css";
 const Shop = () => {
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const Shop = () => {
   const [color, setColor] = useState(null);
   const [year, setYear] = useState(null);
   const [size, setSize] = useState(null);
+  const [closeFilter, setCloseFilter] = useState(false);
 
   const getShoes = (e) => {
     e.preventDefault();
@@ -42,6 +43,7 @@ const Shop = () => {
       if (data.shoes.length) {
         setRenderShoes(true);
       } else {
+        // console.log(data);
         setRenderShoes(false);
       }
     });
@@ -66,6 +68,9 @@ const Shop = () => {
         const data = await res;
         if (data.shoes.length) {
           setRenderShoes(true);
+        } else {
+          // console.log(data);
+          setRenderShoes(false);
         }
       }
     );
@@ -260,6 +265,7 @@ const Shop = () => {
                 onChange={(e) => setYear(e.target.value)}
                 type="number"
                 placeholder="YEAR"
+                value={year}
               ></input>
             )}
           </div>
@@ -298,11 +304,16 @@ const Shop = () => {
             className="s-s-c-button"
             onClick={(e) => {
               e.preventDefault();
-              setMinPrice(null);
-              setMaxPrice(null);
+              setMinPrice("");
+              setMaxPrice("");
               setColor(null);
-              setYear(null);
+              setYear("");
+              setShowPrice(false);
+              setShowColor(false);
+              setShowYear(false);
+              setShowSize(false);
               setApplyFilter(true);
+              setCloseFilter(true);
             }}
           >
             CLEAR FILTERS

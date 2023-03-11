@@ -67,7 +67,7 @@ def delete_shoe(id):
 @shoe_routes.route("/top", methods=["GET"])
 def get_fav_shoes():
     shoe1 = Shoe.query.get(1)
-    shoe2 = Shoe.query.get(2)
+    shoe2 = Shoe.query.get(20)
     shoe3 = Shoe.query.get(3)
     return {"shoe1":object_as_dict(shoe1),"shoe2":object_as_dict(shoe2),"shoe3":object_as_dict(shoe3)}
 

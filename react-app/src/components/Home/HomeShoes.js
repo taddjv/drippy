@@ -3,12 +3,7 @@ import "./Home.css";
 import jordanBanner from "../../images/jordan1banner.jpg";
 import vansBanner from "../../images/vansBanner.jpg";
 import converseBanner from "../../images/converseBanner.jpg";
-import shoe1 from "../../images/pngwing.com.png";
-import shoe2 from "../../images/pngwing.com2.png";
 import { NavLink } from "react-router-dom";
-import HomeBackground1 from "../../images/Home-background-1";
-// import shoe11 from "../../images/jordan1.png";
-// react-app/src/images/jordan1Poster.jpeg
 
 const HomeShoes = ({ renderShoes, shoe1, shoe2, shoe3 }) => {
   const [sectionPosition, setSectionPosition] = useState(0);

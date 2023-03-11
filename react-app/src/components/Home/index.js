@@ -11,6 +11,7 @@ const Home = () => {
   const { setTransNav } = useModal();
   const shoes = useSelector((state) => state.shoeReducer);
   const brands = useSelector((state) => state.brandReducer);
+  console.log(shoes);
 
   const [renderShoes, setRenderShoes] = useState(false);
   const [renderBrands, setRenderBrands] = useState(false);

@@ -18,3 +18,12 @@ class CartItem(db.Model):
     shoe = db.relationship("Shoe", back_populates="cart_item")
     cart = db.relationship("Cart", back_populates="cart_items")
     user = db.relationship("User", back_populates="cart_items")
+
+
+    def duplicate_item(self,cart_items):
+        for shoe in cart_items:
+            if str(shoe.shoe_id) == str(self.shoe_id):
+                if float(self.shoe_size) == shoe.shoe_size:
+                    return True
+
+        return False

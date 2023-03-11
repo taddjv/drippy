@@ -92,25 +92,21 @@ const Shoe = () => {
     if (shoeSize) {
       dispatch(
         cartActions.postTheCartItem(data, cart.id || sessionUser.cart.id)
-      )
-        .then(async (res) => {
-          const data = await res;
-          if (!sessionUser) {
-            setErrors(["You must be signed in to order a shoe."]);
-          } else {
-            setShoeSize("");
-            setSuccess(true);
-            setTimeout(() => {
-              setSuccess(false);
-            }, 2000);
-            setErrors([]);
-          }
-        })
-        .catch(async (res) => {
-          const data = await res;
-          setSuccess(false);
-          setErrors(["You have already selected this shoe."]);
-        });
+      ).then(async (res) => {
+        const data = await res;
+        if (!sessionUser) {
+          setErrors(["You must be signed in to order a shoe."]);
+        } else if (data.errors) {
+          setErrors(data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2)));
+        } else {
+          setShoeSize("");
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 2000);
+          setErrors([]);
+        }
+      });
     } else {
       setErrors(["Please pick a size"]);
       setErrorClass("option-error");

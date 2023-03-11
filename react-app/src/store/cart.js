@@ -58,13 +58,11 @@ export const postTheCartItem = (item, cartId) => async (dispatch) => {
     return "no user";
   }
   const data = await response.json();
+
   if (response.ok) {
-    if (data.errors) {
-      return data.errors;
-    }
-
     dispatch(postCartItem(data));
-
+    return data;
+  } else {
     return data;
   }
 };
