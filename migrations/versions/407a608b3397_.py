@@ -9,6 +9,10 @@ from alembic import op
 import sqlalchemy as sa
 
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 # revision identifiers, used by Alembic.
 revision = '407a608b3397'
 down_revision = 'ffdc0a98111c'
@@ -29,6 +33,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE brands SET SCHEMA {SCHEMA};")
+
+
     op.create_table('carts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -36,6 +44,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
+
+
     op.create_table('shoes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=1000), nullable=False),
@@ -53,6 +65,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE shoes SET SCHEMA {SCHEMA};")
+
+
     op.create_table('cart_items_',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
@@ -66,6 +82,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE cart_items_ SET SCHEMA {SCHEMA};")
+
+
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
@@ -77,6 +97,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
+
+
     with op.batch_alter_table('users', schema=None) as batch_op:
         batch_op.add_column(sa.Column('contact_info', sa.String(length=255), server_default='*,*,*', nullable=True))
         batch_op.add_column(sa.Column('address', sa.String(length=255), server_default='*,*,*,*,*,*', nullable=True))
