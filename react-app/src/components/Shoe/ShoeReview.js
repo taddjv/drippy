@@ -22,7 +22,7 @@ const ShoeReview = ({
   const dispatchEditReview = (e) => {
     e.preventDefault();
     const reviewData = {
-      description: newDescription,
+      description: newDescription || description,
       stars: newStars || stars,
     };
 
