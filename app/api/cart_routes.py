@@ -49,11 +49,11 @@ def get_cart_items_cart(id):
 def post_cart_item(id):
     form = CartItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(form.data['shoe_size'],"----------------------------------")
+    print(float(form.data['shoe_size']),"----------------------------------")
 
     if form.validate_on_submit():
         cart_item = CartItem(
-            shoe_id=form.data['shoe_id'],quantity=form.data['quantity'],shoe_size=form.data['shoe_size'],cart_id=id,user_id=current_user.id)
+            shoe_id=form.data['shoe_id'],quantity=form.data['quantity'],shoe_size=float(form.data['shoe_size']),cart_id=id,user_id=current_user.id)
         if cart_item.duplicate_item(current_user.cart_items):
             return {'errors': validation_errors_to_error_messages({"cart":['You have already selected this shoe.']})}, 400
         db.session.add(cart_item)
