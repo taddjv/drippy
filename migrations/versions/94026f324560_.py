@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c6fa0232b1ec
+Revision ID: 94026f324560
 Revises: ffdc0a98111c
-Create Date: 2023-03-08 15:59:05.060909
+Create Date: 2023-03-11 14:12:48.772691
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'c6fa0232b1ec'
+revision = '94026f324560'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -72,7 +72,7 @@ def upgrade():
         op.execute(f"ALTER TABLE shoes SET SCHEMA {SCHEMA};")
 
 
-    op.create_table('cartItems',
+    op.create_table('cart_items_',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('shoe_size', sa.Numeric(precision=2, scale=1), nullable=False),
@@ -87,7 +87,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE cartItems SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE cart_items_ SET SCHEMA {SCHEMA};")
 
 
     op.create_table('reviews',
@@ -124,7 +124,7 @@ def downgrade():
         batch_op.drop_column('contact_info')
 
     op.drop_table('reviews')
-    op.drop_table('cartItems')
+    op.drop_table('cart_items_')
     op.drop_table('shoes')
     op.drop_table('carts')
     op.drop_table('brands')

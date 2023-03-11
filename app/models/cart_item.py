@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 class CartItem(db.Model):
-    __tablename__ = "cartItems"
+    __tablename__ = "cart_items_"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
