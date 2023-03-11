@@ -1,20 +1,16 @@
 """empty message
 
-Revision ID: 94026f324560
+Revision ID: 407a608b3397
 Revises: ffdc0a98111c
-Create Date: 2023-03-11 14:12:48.772691
+Create Date: 2023-03-11 16:52:07.597175
 
 """
 from alembic import op
 import sqlalchemy as sa
 
-import os
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
-
 
 # revision identifiers, used by Alembic.
-revision = '94026f324560'
+revision = '407a608b3397'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -33,11 +29,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE brands SET SCHEMA {SCHEMA};")
-
-
     op.create_table('carts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -45,11 +36,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
-
-
     op.create_table('shoes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=1000), nullable=False),
@@ -67,15 +53,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE shoes SET SCHEMA {SCHEMA};")
-
-
     op.create_table('cart_items_',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
-    sa.Column('shoe_size', sa.Numeric(precision=2, scale=1), nullable=False),
+    sa.Column('shoe_size', sa.Numeric(precision=3, scale=1), nullable=False),
     sa.Column('shoe_id', sa.Integer(), nullable=False),
     sa.Column('cart_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -85,11 +66,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE cart_items_ SET SCHEMA {SCHEMA};")
-
-
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
@@ -101,11 +77,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
-
-
     with op.batch_alter_table('users', schema=None) as batch_op:
         batch_op.add_column(sa.Column('contact_info', sa.String(length=255), server_default='*,*,*', nullable=True))
         batch_op.add_column(sa.Column('address', sa.String(length=255), server_default='*,*,*,*,*,*', nullable=True))

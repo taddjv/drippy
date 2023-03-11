@@ -49,7 +49,7 @@ def get_cart_items_cart(id):
 def post_cart_item(id):
     form = CartItemForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(float(form.data['shoe_size']),"----------------------------------")
+    # print(float(form.data['shoe_size']),"----------------------------------")
 
     if form.validate_on_submit():
         cart_item = CartItem(

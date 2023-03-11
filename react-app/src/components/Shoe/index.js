@@ -80,6 +80,8 @@ const Shoe = () => {
 
   const radioChange = (e) => {
     setShoeSize(e.target.value);
+    setErrors([]);
+    setSuccess(false);
   };
   const addToCart = (e) => {
     e.preventDefault();
@@ -97,14 +99,15 @@ const Shoe = () => {
         if (!sessionUser) {
           setErrors(["You must be signed in to order a shoe."]);
         } else if (data.errors) {
+          setSuccess(false);
           setErrors(data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2)));
         } else {
+          setErrors([]);
           setShoeSize("");
           setSuccess(true);
           setTimeout(() => {
             setSuccess(false);
           }, 2000);
-          setErrors([]);
         }
       });
     } else {
