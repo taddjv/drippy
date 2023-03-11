@@ -279,7 +279,7 @@ const Shoe = () => {
             <form className="s-r-form" onSubmit={addToCart}>
               {success && (
                 <div className="s-r-f-success">
-                  Shoe added ot cart successfully
+                  Shoe added to cart successfully
                 </div>
               )}
 

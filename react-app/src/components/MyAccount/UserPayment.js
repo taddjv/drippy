@@ -195,7 +195,7 @@ const UserPayment = (user) => {
                   defaultValue={
                     userCard.split(",")[1] === "*"
                       ? "0000"
-                      : userCard.split(",")[1].split("/").join("")
+                      : userCard.split(",")[1]
                   }
                   onChange={(e) => {
                     setNewDate(e.target.value);
