@@ -35,7 +35,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE brands SET SCHEMA {SCHEMA};")
 
 
     op.create_table('carts',
@@ -47,7 +47,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
 
 
     op.create_table('shoes',
@@ -69,7 +69,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE shoes SET SCHEMA {SCHEMA};")
 
 
     op.create_table('cartItems',
@@ -87,7 +87,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE cartItems SET SCHEMA {SCHEMA};")
 
 
     op.create_table('reviews',
@@ -103,7 +103,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
 
 
     with op.batch_alter_table('users', schema=None) as batch_op:
