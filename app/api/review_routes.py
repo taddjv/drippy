@@ -14,7 +14,6 @@ def validation_errors_to_error_messages(validation_errors):
     Simple function that turns the WTForms validation errors into a simple list
     """
     errorMessages = []
-    print(validation_errors,"----------------------")
     for field in validation_errors:
         for error in validation_errors[field]:
             errorMessages.append(f'{field} : {error}')
@@ -31,13 +30,13 @@ def object_as_dict(obj):
 def get_reviews_shoe(id,sort):
     reviews = None
     if sort == "newest":
-        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.dateCreated.desc())
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(str(id))).order_by(Review.dateCreated.desc())
     if sort == "oldest":
-        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.dateCreated)
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(str(id))).order_by(Review.dateCreated)
     if sort == "high":
-        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.stars.desc())
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(str(id))).order_by(Review.stars.desc())
     if sort == "low":
-        reviews = db.session.query(Review).filter(Review.shoe_id.like(id)).order_by(Review.stars)
+        reviews = db.session.query(Review).filter(Review.shoe_id.like(str(id))).order_by(Review.stars)
     final = {"reviews":[]}
     for review in reviews:
         final_review = object_as_dict(review)
