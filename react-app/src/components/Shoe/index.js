@@ -182,7 +182,9 @@ const Shoe = () => {
                       <NavLink
                         className="s-r-d-l-b-name"
                         exact
-                        to={`/brands/${shoe.brand.id}`}
+                        to={`/shop?brand=${shoe.brand.name
+                          .split(" ")
+                          .join("+")}`}
                       >
                         {" " + capFirstLetter(shoe.brand.name) + " "}
                       </NavLink>
