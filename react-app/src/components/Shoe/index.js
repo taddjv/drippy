@@ -13,7 +13,6 @@ import {
 import { useModal } from "../../context/Modal";
 import ShoeReview from "./ShoeReview";
 import * as shoeActions from "../../store/shoe";
-import * as brandActions from "../../store/brand";
 import * as reviewActions from "../../store/review";
 import * as cartActions from "../../store/cart";
 import * as tempActions from "../../store/tempShoe";
@@ -53,16 +52,15 @@ const Shoe = () => {
   const [sortReviews, setSortReviews] = useState("newest");
 
   useEffect(() => {
-    dispatch(authenticate()).then(async (res) => {
-      if (await res) {
-        dispatch(cartActions.getTheCart(await res.cart.id));
-      }
-    });
+    // dispatch(authenticate()).then(async (res) => {
+    //   if (await res) {
+    //     dispatch(cartActions.getTheCart(await res.cart.id));
+    //   }
+    // });
     dispatch(shoeActions.getTheShoe(id)).then(() => {
       setRenderShoes(true);
     });
     dispatch(reviewActions.getTheReviews(sortReviews, id));
-    dispatch(brandActions.getTheBrands());
     dispatch(tempActions.getTheShoes());
     setTransNav(false);
   }, []);

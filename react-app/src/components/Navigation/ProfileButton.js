@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import { useModal } from "../../context/Modal";
+import { dataRender } from "../../helpers/storeHelpers";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import YourCart from "./YourCart";
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, cart }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
@@ -65,6 +66,10 @@ function ProfileButton({ user }) {
       )}
       {user ? (
         <>
+          {/* {dataRender(cart).length ? (
+            <div className="n-r-cartCount">{dataRender(cart).length}</div>
+          ) : null} */}
+
           <i
             onClick={() => {
               setShowCartModal(true);

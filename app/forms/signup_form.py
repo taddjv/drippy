@@ -6,7 +6,7 @@ from app.models import User
 
 def is_email(form, field):
     email=field.data
-    if "@" in email and email.endswith(".com") :
+    if "@" in email :
         return
     else:
         raise ValidationError('Not a valid email.')
@@ -27,7 +27,7 @@ def valid_password(form,field):
 def user_exists(form, field):
     # Checking if user exists
     email = field.data
-    user = User.query.filter(User.email == email).first()
+    user = User.query.filter((User.email) == email).first()
     if user:
         raise ValidationError('Email address is already in use.')
 

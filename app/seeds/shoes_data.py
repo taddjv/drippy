@@ -70,7 +70,7 @@ vans_sk8_hi = [
        },  {"colors":"red",
        "name": "Vans SK8-Hi 'Red'",
        "url": "https://cdn.runrepeat.com/i/vans/26709/vans-mens-u-sk8-hi-racing-red-true-white-size-8-5-racing-red-true-white-15c8-600.jpg"
-       },{"colors":"red",
+       },{"colors":"brown",
        "name": "Vans SK8-Hi 'Brown'",
        "url": "https://cdn.runrepeat.com/i/vans/26709/vans-sk8-hi-rain-drum-true-white-unisex-rain-drum-true-white-1e42-main.jpg"
        },{"colors":"green",
@@ -436,7 +436,7 @@ jordan_4 =[
        "name": "Union X Air Jordan 4 Retro 'Off Noir'",
        "url": "https://images.solecollector.com/complex/image/upload/c_fill,f_auto,fl_lossy,q_auto,w_1100/ugb9y5cz6e8sopzrsflm_yrmfgo.jpg"
        },{
-    "colors":"purple",
+    "colors":"beige",
        "name": "Off-White X Air Jordan 4 Retro Women's 'Sail'",
        "url": "https://images.solecollector.com/complex/image/upload/c_fill,f_auto,fl_lossy,q_auto,w_1100/qw3as7yp5gfcfpwbytge.jpg"
        },

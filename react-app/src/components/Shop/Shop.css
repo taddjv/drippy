@@ -21,7 +21,7 @@
 }
 
 .shop-container-shoe {
-  max-width: 260px;
+  width: 260px;
   height: 305px;
   background: white;
   text-align: center;
@@ -199,4 +199,7 @@
 }
 .s-s-c-button:hover {
   background-color: #efeeef;
+}
+.s-s-c-size > p {
+  color: red;
 }

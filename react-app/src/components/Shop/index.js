@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as shoeActions from "../../store/shoe";
@@ -10,6 +10,8 @@ import { storeShoesRender } from "../../helpers/storeHelpers";
 import "./Shop.css";
 const Shop = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const query = new URLSearchParams(useLocation().search);
   const { setTransNav } = useModal();
 
   const shoes = useSelector((state) => state.shoeReducer);
@@ -33,24 +35,35 @@ const Shop = () => {
 
   const getShoes = (e) => {
     e.preventDefault();
-    let search = searchQuery;
-    if (!searchQuery) {
+    let search = searchQuery || query.get("brand");
+    if (!search) {
       search = "all";
     }
-    dispatch(shoeActions.getTheShoes(sortQuery, search)).then(async (res) => {
-      const data = await res;
+    const queryData = {};
+    if (minPrice && maxPrice) {
+      queryData["price"] = [minPrice, maxPrice];
+    }
+    if (color) {
+      queryData["color"] = color;
+    }
+    if (year) {
+      queryData["year"] = year;
+    }
+    dispatch(shoeActions.getTheShoes(sortQuery, search, queryData)).then(
+      async (res) => {
+        const data = await res;
 
-      if (data.shoes.length) {
-        setRenderShoes(true);
-      } else {
-        // console.log(data);
-        setRenderShoes(false);
+        if (data.shoes.length) {
+          setRenderShoes(true);
+        } else {
+          setRenderShoes(false);
+        }
       }
-    });
+    );
   };
   useEffect(() => {
-    let search = searchQuery;
-    if (!searchQuery) {
+    let search = searchQuery || query.get("brand");
+    if (!search) {
       search = "all";
     }
     const queryData = {};
@@ -69,14 +82,13 @@ const Shop = () => {
         if (data.shoes.length) {
           setRenderShoes(true);
         } else {
-          // console.log(data);
           setRenderShoes(false);
         }
       }
     );
     setApplyFilter(false);
     setTransNav(false);
-  }, [sortQuery, applyFilter]);
+  }, [sortQuery, applyFilter, query.get("brand")]);
 
   //! masonry grid layout
   return (
@@ -275,7 +287,7 @@ const Shop = () => {
             {showSize && (
               <>
                 {" "}
-                <select onClick={(e) => e.stopPropagation()}>
+                {/* <select onClick={(e) => e.stopPropagation()}>
                   <option>Select Size</option>
                   <option>4</option>
                   <option>5</option>
@@ -286,8 +298,8 @@ const Shop = () => {
                   <option>10</option>
                   <option>11</option>
                   <option>12</option>
-                </select>
-                ***
+                </select> */}
+                <p>Feature not added yet</p>
               </>
             )}
           </div>
@@ -326,11 +338,12 @@ const Shop = () => {
           <form onSubmit={getShoes} className="s-c-t-search">
             <input
               type="text"
-              value={searchQuery}
+              value={searchQuery || query.get("brand")}
               className="s-c-t-s-input"
               placeholder="Find your pair here !"
               onChange={(e) => {
                 setSearchQuery(e.target.value);
+                history.push("/shop");
               }}
             />
             <button type="submit" className="s-c-t-s-search">

@@ -79,68 +79,76 @@ const YourCart = ({
                 </li>
               ))}
             </ul>
-            {dataRender(cart).map((ele) => (
-              <div className="yc-cartItem">
-                <div className="yc-ci-left">
-                  <img src={ele.shoe.url} className="yc-ci-l-image" />
-                </div>
-                <div className="yc-ci-right">
-                  <div className="yc-ci-r-top">
-                    <div className="yc-ci-r-t-left">
-                      <h1>{ele.shoe.name}</h1>
-                      <h2>size {ele.shoe_size}</h2>
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(cartActions.deleteTheCartItem(ele.id));
-                      }}
-                      className="yc-ci-r-t-right"
-                    >
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
+            {dataRender(cart).length ? (
+              dataRender(cart).map((ele) => (
+                <div className="yc-cartItem">
+                  <div className="yc-ci-left">
+                    <img src={ele.shoe.url} className="yc-ci-l-image" />
                   </div>
-                  <div className="yc-ci-r-bottom">
-                    <div className="yc-ci-r-b-left">${ele.shoe.price} USD</div>
-                    <div className="yc-ci-r-b-right">
+                  <div className="yc-ci-right">
+                    <div className="yc-ci-r-top">
+                      <div className="yc-ci-r-t-left">
+                        <h1>{ele.shoe.name}</h1>
+                        <h2>size {ele.shoe_size}</h2>
+                      </div>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          const data = {
-                            shoe_id: ele.shoe_id,
-                            shoe_size: ele.shoe_size,
-                            quantity: ele.quantity - 1,
-                          };
-                          if (ele.quantity === 1) {
-                            dispatch(cartActions.deleteTheCartItem(ele.id));
-                          } else {
+                          dispatch(cartActions.deleteTheCartItem(ele.id));
+                        }}
+                        className="yc-ci-r-t-right"
+                      >
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div className="yc-ci-r-bottom">
+                      <div className="yc-ci-r-b-left">
+                        ${ele.shoe.price} USD
+                      </div>
+                      <div className="yc-ci-r-b-right">
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const data = {
+                              shoe_id: ele.shoe_id,
+                              shoe_size: ele.shoe_size,
+                              quantity: ele.quantity - 1,
+                            };
+                            if (ele.quantity === 1) {
+                              dispatch(cartActions.deleteTheCartItem(ele.id));
+                            } else {
+                              dispatch(
+                                cartActions.putTheCartItem(data, ele.id)
+                              );
+                            }
+                          }}
+                          className="yc-ci-r-b-r-minus"
+                        >
+                          −
+                        </button>
+                        <div className="yc-ci-r-b-r-number">{ele.quantity}</div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const data = {
+                              shoe_id: ele.shoe_id,
+                              shoe_size: ele.shoe_size,
+                              quantity: ele.quantity + 1,
+                            };
                             dispatch(cartActions.putTheCartItem(data, ele.id));
-                          }
-                        }}
-                        className="yc-ci-r-b-r-minus"
-                      >
-                        −
-                      </button>
-                      <div className="yc-ci-r-b-r-number">{ele.quantity}</div>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const data = {
-                            shoe_id: ele.shoe_id,
-                            shoe_size: ele.shoe_size,
-                            quantity: ele.quantity + 1,
-                          };
-                          dispatch(cartActions.putTheCartItem(data, ele.id));
-                        }}
-                        className="yc-ci-r-b-r-plus"
-                      >
-                        +
-                      </button>
+                          }}
+                          className="yc-ci-r-b-r-plus"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="cart-message">your cart is empty</div>
+            )}
           </div>
 
           <div className="yc-bottom">
@@ -181,18 +189,6 @@ const YourCart = ({
                     </div>
                   </div>
                 </div>
-                {/* {showButton && (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      dispatch(cartActions.clearTheCart(cart.id));
-                      history.push("/");
-                    }}
-                    className="yc-b-bottom"
-                  >
-                    Place Order
-                  </button>
-                )} */}
                 {showButton && (
                   <button onClick={placeOrder} className="yc-b-bottom">
                     Place Order

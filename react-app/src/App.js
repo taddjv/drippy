@@ -22,6 +22,7 @@ function App() {
   useEffect(() => {
     if (currentUser.user)
       dispatch(cartActions.getTheCart(currentUser.user.cart.id));
+    setIsLoaded(true);
   }, [currentUser]);
 
   useEffect(() => {

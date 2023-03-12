@@ -181,9 +181,10 @@ const UserPayment = (user) => {
                   type="number"
                   defaultValue={
                     userCard.split(",")[0] === "*"
-                      ? "0000000000000000"
+                      ? null
                       : userCard.split(",")[0]
                   }
+                  placeholder="Credit card number"
                   onChange={(e) => {
                     setNewNumber(e.target.value);
                     setErrors([]);
@@ -194,9 +195,10 @@ const UserPayment = (user) => {
                   type="number"
                   defaultValue={
                     userCard.split(",")[1] === "*"
-                      ? "0000"
+                      ? null
                       : userCard.split(",")[1]
                   }
+                  placeholder="date"
                   onChange={(e) => {
                     setNewDate(e.target.value);
                     setErrors([]);
@@ -207,9 +209,10 @@ const UserPayment = (user) => {
                   type="number"
                   defaultValue={
                     userCard.split(",")[2] === "*"
-                      ? "000"
+                      ? null
                       : userCard.split(",")[2]
                   }
+                  placeholder="CVV"
                   onChange={(e) => {
                     setNewSecurity(e.target.value);
                     setErrors([]);

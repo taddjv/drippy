@@ -25,17 +25,24 @@ const ShoeReview = ({
       description: newDescription || description,
       stars: newStars || stars,
     };
+    if (newDescription === "*") {
+      setErrors(["You must add a description"]);
+    } else {
+      dispatch(reviewsActions.putTheReview(reviewData, id)).then(
+        async (res) => {
+          const data = await res;
 
-    dispatch(reviewsActions.putTheReview(reviewData, id)).then(async (res) => {
-      const data = await res;
-
-      if (data.errors) {
-        setErrors(data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2)));
-      } else {
-        setEditReview(false);
-        setErrors([]);
-      }
-    });
+          if (data.errors) {
+            setErrors(
+              data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2))
+            );
+          } else {
+            setEditReview(false);
+            setErrors([]);
+          }
+        }
+      );
+    }
   };
   return (
     <div className="shoeReview">
@@ -102,7 +109,11 @@ const ShoeReview = ({
               className="sr-r-b-desc"
               defaultValue={description}
               onChange={(e) => {
-                setNewDescription(e.target.value);
+                if (e.target.value === "") {
+                  setNewDescription("*");
+                } else {
+                  setNewDescription(e.target.value);
+                }
               }}
             ></input>
 
