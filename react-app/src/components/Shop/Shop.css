@@ -22,6 +22,7 @@
 
 .shop-container-shoe {
   max-width: 260px;
+  height: 305px;
   background: white;
   text-align: center;
   padding: 14px;
@@ -36,8 +37,16 @@
   text-align: end;
   font-size: 14px;
 }
+.s-c-s-image-container {
+  width: 100%;
+  height: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .s-c-s-image {
   max-width: 100%;
+  max-height: 100%;
 }
 .s-c-s-name {
   font-size: 14px;

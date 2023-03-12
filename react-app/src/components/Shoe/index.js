@@ -90,15 +90,14 @@ const Shoe = () => {
       quantity: 1,
       shoe_size: Number(shoeSize.slice(5)),
     };
-
-    if (shoeSize) {
+    if (!sessionUser) {
+      setErrors(["You must be signed in to order a shoe."]);
+    } else if (shoeSize) {
       dispatch(
         cartActions.postTheCartItem(data, cart.id || sessionUser.cart.id)
       ).then(async (res) => {
         const data = await res;
-        if (!sessionUser) {
-          setErrors(["You must be signed in to order a shoe."]);
-        } else if (data.errors) {
+        if (data.errors) {
           setSuccess(false);
           setErrors(data.errors.map((ele) => ele.slice(ele.indexOf(":") + 2)));
         } else {
@@ -296,7 +295,7 @@ const Shoe = () => {
           </div>
         </div>
       )}
-      <div className="related-shoe">related shoes</div>
+      {/* <div className="related-shoe">related shoes</div> */}
       <div className="review-separator">
         <h1>Reviews</h1>
       </div>

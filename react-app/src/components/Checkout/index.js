@@ -47,7 +47,6 @@ const Checkout = () => {
   useEffect(() => {
     setTransNav(false);
     if (user) {
-      // console.log(user.card.split(",")[1]);
       if (user.address.split(",")[2] !== "*") {
         setState(user.address.split(",")[2]);
       }
@@ -71,7 +70,6 @@ const Checkout = () => {
     if (!payType) {
       setCcErrors(["Please select a payment type"]);
     }
-    // console.log(payType);
   };
 
   const continueShipping = (e) => {

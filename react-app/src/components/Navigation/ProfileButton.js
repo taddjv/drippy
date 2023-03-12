@@ -96,7 +96,7 @@ function ProfileButton({ user }) {
             <button className="n-r-b-button" onClick={handleLogout}>
               Log Out
             </button>
-            <button className="n-r-b-button">Dark mode</button>
+            {/* <button className="n-r-b-button">Dark mode</button> */}
           </>
         ) : (
           <>

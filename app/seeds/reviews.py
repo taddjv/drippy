@@ -4,9 +4,10 @@ import random
 
 # Adds a demo user, you can add other users here if you want
 def seed_reviews():
+    all_shoes = db.session.query(Shoe).all()
     reviews = ["these are greaT", "they're cool", "they're ok to me", "i don't like it but wtv"]
 
-    for x in range(21):
+    for x in range(len(all_shoes)):
         number_of_reviews = random.randint(1, 4)
         shoe = Shoe.query.get(x + 1)
         for review_number in range(number_of_reviews):
