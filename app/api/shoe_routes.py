@@ -99,7 +99,7 @@ def get_all_shoes():
 @shoe_routes.route("<string:sort>/search/<string:search>/", methods=["GET"])
 def search_all_shoes(sort,search):
     searchQuery = None
-    if (search == "all"):
+    if (search == "All"):
         searchQuery = ""
     else:
         searchQuery = search
