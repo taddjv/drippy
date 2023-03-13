@@ -11,7 +11,6 @@ export const getShoesUrl = (sort, search, query) => {
   if (query?.year) {
     final.push(`year=${query.year}`);
   }
-
   return url + "?" + final.join("&");
 };
 

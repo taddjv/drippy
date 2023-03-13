@@ -48,12 +48,12 @@ export const getTheShoe = (id) => async (dispatch) => {
 export const getTheShoes = (sort, search, query) => async (dispatch) => {
   const newSearch =
     search[0].toUpperCase() + search.split("").slice(1).join("");
-  const response = await fetch(getShoesUrl(sort, search, query), {
+  const response = await fetch(getShoesUrl(sort, newSearch, query), {
     headers: {
       "Content-Type": "application/json",
     },
   });
-  console.log(newSearch);
+
   if (response.ok) {
     const data = await response.json();
     if (data.errors) {
