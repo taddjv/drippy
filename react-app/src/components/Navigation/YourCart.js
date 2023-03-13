@@ -161,10 +161,10 @@ const YourCart = ({
                       ${cartData(cart).total} USD
                     </div>
                   </div>
-                  <div>
+                  {/* <div>
                     <div className="yc-b-t-left">Promo Code</div>
                     <div className="yc-b-t-right-promo">-$0 USD</div>
-                  </div>
+                  </div> */}
                   <div>
                     <div className="yc-b-t-left">Sales Tax</div>
                     <div className="yc-b-t-right">

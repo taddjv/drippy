@@ -85,7 +85,10 @@ def sign_up():
         db.session.add(cart)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        final_user = object_as_dict(user)
+        final_user["cart"] = object_as_dict(cart)
+        del final_user["hashed_password"]
+        return final_user
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

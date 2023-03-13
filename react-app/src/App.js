@@ -20,8 +20,10 @@ function App() {
 
   const currentUser = useSelector((state) => state.session);
   useEffect(() => {
-    if (currentUser.user)
+    if (currentUser.user) {
+      console.log(currentUser.user);
       dispatch(cartActions.getTheCart(currentUser.user.cart.id));
+    }
     setIsLoaded(true);
   }, [currentUser]);
 

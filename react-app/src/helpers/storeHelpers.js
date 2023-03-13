@@ -14,6 +14,13 @@ export const getShoesUrl = (sort, search, query) => {
   return url + "?" + final.join("&");
 };
 
+export const searchConv = (search) => {
+  return search
+    .split(" ")
+    .map((ele) => ele[0].toUpperCase() + ele.split("").slice(1).join(""))
+    .join(" ");
+};
+
 export const renderStars = (stars, cl) => {
   let finalStars = [];
   for (let i = 0; i < Math.floor(stars); i++) {

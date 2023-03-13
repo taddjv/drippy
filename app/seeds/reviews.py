@@ -8,7 +8,7 @@ def seed_reviews():
     reviews = ["these are greaT", "they're cool", "they're ok to me", "i don't like it but wtv"]
 
     for x in range(len(all_shoes)):
-        number_of_reviews = random.randint(1, 4)
+        number_of_reviews = random.randint(2, 5)
         shoe = Shoe.query.get(x + 1)
         for review_number in range(number_of_reviews):
             random_user = random.randint(1,3)

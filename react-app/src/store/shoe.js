@@ -1,4 +1,4 @@
-import { getShoesUrl } from "../helpers/storeHelpers";
+import { getShoesUrl, searchConv } from "../helpers/storeHelpers";
 const GET_SHOE = "shoe/GET_SHOE";
 const GET_SHOES = "shoe/GET_SHOES";
 const GET_TOP_SHOES = "shoe/GET_TOP_SHOES";
@@ -46,9 +46,7 @@ export const getTheShoe = (id) => async (dispatch) => {
   }
 };
 export const getTheShoes = (sort, search, query) => async (dispatch) => {
-  const newSearch =
-    search[0].toUpperCase() + search.split("").slice(1).join("");
-  const response = await fetch(getShoesUrl(sort, newSearch, query), {
+  const response = await fetch(getShoesUrl(sort, searchConv(search), query), {
     headers: {
       "Content-Type": "application/json",
     },
