@@ -1,6 +1,6 @@
-import React, { useRef, useState, useContext } from "react";
-import ReactDOM from "react-dom";
-import "./Modal.css";
+import React, { useRef, useState, useContext } from 'react';
+import ReactDOM from 'react-dom';
+import './Modal.css';
 
 const ModalContext = React.createContext();
 
@@ -10,14 +10,11 @@ export function ModalProvider({ children }) {
   // callback function that will be called when modal is closing
   const [onModalClose, setOnModalClose] = useState(null);
 
-  const [showCartModal, setShowCartModal] = useState(false);
-  const [transNav, setTransNav] = useState(true);
-
   const closeModal = () => {
     setModalContent(null); // clear the modal contents
     // If callback function is truthy, call the callback function and reset it
     // to null:
-    if (typeof onModalClose === "function") {
+    if (typeof onModalClose === 'function') {
       setOnModalClose(null);
       onModalClose();
     }
@@ -28,11 +25,7 @@ export function ModalProvider({ children }) {
     modalContent, // React component to render inside modal
     setModalContent, // function to set the React component to render inside modal
     setOnModalClose, // function to set the callback function called when modal is closing
-    closeModal, // function to close the modal
-    showCartModal,
-    setShowCartModal,
-    transNav,
-    setTransNav,
+    closeModal // function to close the modal
   };
 
   return (
@@ -55,7 +48,9 @@ export function Modal() {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={closeModal} />
-      <div id="modal-content">{modalContent}</div>
+      <div id="modal-content">
+        {modalContent}
+      </div>
     </div>,
     modalRef.current
   );

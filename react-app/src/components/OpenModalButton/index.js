@@ -1,13 +1,11 @@
-import React from "react";
-import { useModal } from "../../context/Modal";
+import React from 'react';
+import { useModal } from '../../context/Modal';
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
   buttonText, // text of the button that opens the modal
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
-  onModalClose, // optional: callback function that will be called once the modal is closed
-  className,
-  button,
+  onModalClose // optional: callback function that will be called once the modal is closed
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -16,17 +14,10 @@ function OpenModalButton({
     setModalContent(modalComponent);
     if (onButtonClick) onButtonClick();
   };
-  if (button) {
-    return (
-      <button className={className} onClick={onClick}>
-        {buttonText}
-      </button>
-    );
-  } else {
-    return (
-      <i className="fa fa-shopping-cart n-r-link" size="m" onClick={onClick} />
-    );
-  }
+
+  return (
+    <button onClick={onClick}>{buttonText}</button>
+  );
 }
 
 export default OpenModalButton;
